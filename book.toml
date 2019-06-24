@@ -1,0 +1,11 @@
+# -*- coding:utf-8-unix -*-
+
+[book]
+title = "AtCoderコンテストにRustで参加するためのガイドブック"
+# authors = ["rust-lang-ja authors"]
+# description = ""
+multilingual = false
+src = "src"
+
+[build]
+build-dir = "docs"
