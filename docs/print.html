@@ -483,7 +483,7 @@ $ rm -rf /tmp/hello
 </code></pre>
 <p>そしてジャッジの際には、<code>cargo</code>を使用せず、<code>rustc</code>に適切なオプション（ライブラリ検索パスなど）を与えて実行することで、事前にコンパイルしておいた<code>rlib</code>ファイルとリンクさせます。</p>
 <p><strong>AtCoderジャッジサーバでのファイルレイアウト（ジャッジの際に作成する）</strong></p>
-<pre><code>$HOME             # ユーザのホームディレクトリ
+<pre><code class="language-console">$HOME             # ユーザのホームディレクトリ
 └-- WORKAREA      # ジャッジ用の一時ディレクトリ
     |-- main.rs   # ユーザプログラム（提出されたプログラム）のソースコード
     └-- main      # コンパイル、リンク済みの実行可能ファイル（バイナリ）
