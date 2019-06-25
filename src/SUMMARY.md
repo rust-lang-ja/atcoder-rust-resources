@@ -27,7 +27,7 @@
   - [インストール (TODO)](./atcoder-env/installation.md)
     - [Rustツールチェインのインストール (TODO)](./atcoder-env/installing-rust-toolchain.md)
     - [クレート（外部ライブラリ）のビルドとインストール (TODO)](./atcoder-env/installing-rust-crates.md)
-    - [クレート検索パス生成プログラムのビルドとインストール(TODO)](./atcoder-env/installing-crate-path-builder.md))
+    - [クレート検索パス生成プログラムのビルドとインストール(TODO)](./atcoder-env/installing-rustc-dep-option-generator.md))
     - [動作確認 (TODO)](./atcoder-env/post-installation.md)
   - [コンパイルコマンドと実行コマンド (TODO)](./atcoder-env/compiling-and-running-program.md)
     - [コンパイルオプションについて (TODO)](./atcoder-env/about-compile-options.md)
