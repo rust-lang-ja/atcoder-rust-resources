@@ -2,28 +2,63 @@
 
 # Rustツールチェインのインストール
 
-**TODO** このページは書きかけです。
+本ページではAtCoderのジャッジサーバにRustツールチェインをインストールする手順を説明します。
 
-- Rustツールチェインを`/usr/local/lib/rust`配下にインストール
-- インストール時にインターネット接続が必要
+
+## Rustバージョン
+
+今回の言語アップデートでは2019年5月20日にリリースされた1.35.0をインストールします。
+
+Rustの安定版（stable版）は6週間ごとにリリースされますので、次の1.36.0は7月4日にリリースされます。
+言語アップデート作業は2019年6月末から開始される予定ですので、1.36.0をインストールすることも可能です。
+しかし今回は安全のために、リリースされてから少し日が経っている1.35.0を選択します。
+
+ツールチェインのインストールには`rustup`というRustプロジェクト公式のコマンドラインツールを使います。
+これにより特定のバージョンのRustをインストールすることが可能になります。
+
+
+## ツールチェインの内容とインストール先
+
+今回インストールするRustツールチェインには以下のものが含まれています。
+
+- Rustコンパイラである`rustc`コマンド
+- Rustのビルドツール兼パッケージマネージャである`cargo`コマンド
+- Rustの標準ライブラリとAPIドキュメント
+
+`cargo`はRustプログラムの開発には欠かせないツールですが、ジャッジの際には使用しません。
+ジャッジサーバでは`rustc`を直接呼び出すことでユーザプログラムをコンパイルし、事前にコンパイルしておいたクレート（外部ライブラリ）とリンクします。
+理由については次のページで説明します。
+
+`cargo`は環境の構築時、具体的にはこのページに続く数ページでRustのクレートや関連ツールをビルドする際に使用します。
+
+Rustツールチェインはデフォルトでは`rustup`を実行したLinuxユーザのホームディレクトリ配下（`~/.rustup/toolchains`）にインストールされます。
+しかし今回はジャッジサーバ上の全てのLinuxユーザから使えるよう、`/usr/local/lib/rust`配下にインストールします。
+このディレクトリは一般のLinuxユーザからは書き込みができないように設定し、ジャッジの際にユーザプログラムからツールチェインが変更されないように守ります。
+
+インストールにあたってインターネット接続が必要です。
 
 
 ## 依存ソフトウェアのインストール
 
-Rustツールチェインのインストールに先立って、Rustプログラムのリンクやクレートのビルドに必要なソフトウェアをインストールします。
+Rustツールチェインをインストールする前に、Rustプログラムのリンクやクレートのビルドに必要なソフトウェアをインストールしましょう。
+必要なソフトウェアは以下のとおりです。
 
 - Rustツールチェインやクレートのダウンロードに必要なツール：curl, git-core
 - Rustプログラムのリンク時に必要なツール：gcc, binutils
-- 一部のRustクレートや関連ツールのビルドに必要なツール：make, pkg-config
-- 一部のRustクレートや関連ツールのビルドに必要なライブラリ：libssl-dev
+- 一部のRustクレートのビルドに必要なツール：make, pkg-config
+
+以下のコマンドを実行します。
 
 ```console
 $ sudo apt update
-$ sudo apt install -y curl git-core gcc binutils make pkg-config libssl-dev
+$ sudo apt install -y curl git-core gcc binutils make pkg-config
 ```
 
 
 ## Rustツールチェインのインストール
+
+`rustup`とRustツールチェインをインストールしましょう。
+以下のコマンドを実行します。
 
 ```console
 $ sudo -i
@@ -31,15 +66,20 @@ $ sudo -i
 # whoami
 root
 
-# export RUST_TOOLCHAIN=1.35.0
+# RUST_TOOLCHAIN=1.35.0
 # export RUST_HOME=/usr/local/lib/rust
 # export RUSTUP_HOME=${RUST_HOME}/rustup
 # export CARGO_HOME=${RUST_HOME}/cargo
 
-# mkdir -p ${RUST_HOME}
+# mkdir -p $RUST_HOME
+# chmod 0755 $RUST_HOME
+
+## rustupをインストールし、同時に指定したバージョンのRustツールチェインをインストールする
 # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
     sh -s -- -y --default-toolchain "${RUST_TOOLCHAIN}" --no-modify-path
 ```
+
+インストールに成功すると以下のように表示されます。
 
 ```console
 info: downloading installer
@@ -60,26 +100,41 @@ in your PATH environment variable.
 To configure your current shell run source /usr/local/lib/rust/cargo/env
 ```
 
-## コマンド検索パスの設定
 
-Rustを使用させたいLinuxユーザのシェルの初期設定ファイル（例`.bashrc`）に以下のコマンドを追加します。
+## 環境変数の設定
+
+rootユーザと一般のLinuxユーザがRustツールチェインを使えるように設定しましょう。
+それぞれのユーザのシェルの初期設定ファイルに以下のコマンドを追加します。
+（`bash`の例です）
 
 ```bash
-source /usr/local/lib/rust/cargo/env
+# .bashrcファイルに以下のコマンドを追加する
+export RUST_HOME=/usr/local/lib/rust
+export RUSTUP_HOME=${RUST_HOME}/rustup
+export CARGO_HOME=${RUST_HOME}/cargo
+source ${CARGO_HOME}/env
 ```
 
-これにより`/usr/local/lib/rust/cargo/bin`がコマンド検索パス（`PATH`）に追加されます。
+最後の`source`コマンドは、コマンド検索パス（`PATH`）に`/usr/local/lib/rust/cargo/bin`を追加します。
 
 
-## インストール結果の確認
+## インストール後の動作確認
+
+Rustツールチェインが正しくインストールできたか確認しましょう。
+一般のLinuxユーザで以下のコマンドを実行します。
 
 ```console
 ## 一般ユーザで実行
-$ source /usr/local/lib/rust/cargo/env
+
+$ source ~/.bashrc
+
+$ echo $RUSTUP_HOME
+/usr/local/lib/rust/rustup
 
 $ which rustc
 /usr/local/lib/rust/cargo/bin/rustc
 
+## バージョンなどを確認
 $ rustc -V
 rustc 1.35.0 (3c235d560 2019-05-20)
 
@@ -88,4 +143,19 @@ cargo 1.35.0 (6f3e9c367 2019-04-04)
 
 $ rustup -V
 rustup 1.18.3 (435397f48 2019-05-22)
+
+$ rustup show
+Default host: x86_64-unknown-linux-gnu
+
+1.35.0-x86_64-unknown-linux-gnu (default)
+rustc 1.35.0 (3c235d560 2019-05-20)
+
+## Rustプログラムのビルドと実行ができることを確認
+$ cd /tmp
+$ cargo new hello && cd $_
+$ cargo run
+Hello, world!   # このように表示されればOK
+
+$ cd
+$ rm -rf /tmp/hello
 ```

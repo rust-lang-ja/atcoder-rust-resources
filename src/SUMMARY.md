@@ -25,7 +25,7 @@
   - [本書が想定する環境と利用形態 (TODO)](./atcoder-env/supported-environment.md)
     - [一般的なRust開発環境との違い (TODO)](./atcoder-env/differences-from-common-installation.md)
   - [インストール (TODO)](./atcoder-env/installation.md)
-    - [Rustツールチェインのインストール (TODO)](./atcoder-env/installing-rust-toolchain.md)
+    - [Rustツールチェインのインストール](./atcoder-env/installing-rust-toolchain.md)
     - [クレート（外部ライブラリ）のビルドとインストール (TODO)](./atcoder-env/installing-rust-crates.md)
     - [クレート検索パス生成プログラムのビルドとインストール(TODO)](./atcoder-env/installing-rustc-dep-option-generator.md))
     - [動作確認 (TODO)](./atcoder-env/post-installation.md)
