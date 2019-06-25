@@ -7,7 +7,7 @@ jobs:
     parallelism: 1
     steps:
       - checkout
-      - run: killall apt-get && apt-get update && apt-get install -y git-core
+      - run: apt-get update && apt-get install -y git-core
       # Remove .gitconfig added by Circle CI as cargo doesn't support ssh authorization
       - run: rm -f ~/.gitconfig
       - run: mdbook build
