@@ -2,11 +2,12 @@
 
 # クレート（外部ライブラリ）のビルドとインストール
 
-**TODO**
+**TODO** このページは書きかけです。
 
 - 対象となるクレートのソースコードを`/usr/local/lib/rust/lib`にダウンロードする
 - クレートをビルドする。
-  ビルド済みのクレート（rlibファイル）は`/usr/local/lib/rust/lib/target/release`に出力される
+  ビルドの成果物（rlibファイル）は`/usr/local/lib/rust/lib/target/release`に出力される
+- インストール時にインターネット接続が必要
 
 ```console
 $ sudo -i
@@ -28,6 +29,23 @@ root
 ビルドに成功すると以下のように表示されます。
 
 ```console
-TODO
+# ./build.sh
++ git submodule update --init
++ cargo clean
++ cargo update
++ cargo build --release --frozen
+Compiling autocfg v0.1.4
+...（中略）...
 
+Finished release [optimized] target(s) in 1m 39s
+$
 ```
+
+```console
+$ find target/release/deps/ -name '*.rlib' | wc -l
+58
+
+$ ./target/release/main
+...
+```
+
