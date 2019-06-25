@@ -11,7 +11,7 @@ $ sudo -i
 # whoami
 root
 
-# cargo install --git https://github.com/rust-lang-ja/atcorder-rustc-dep-option-generator.git
+# cargo install --git https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git
 ```
 
 ```console
