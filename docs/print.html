@@ -1,0 +1,508 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>AtCoderコンテストにRustで参加するためのガイドブック</title>
+        
+        <meta name="robots" content="noindex" />
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> はじめに (TODO)</a></li><li><a href="todo.html"><strong aria-hidden="true">2.</strong> AtCoderの環境について (TODO)</a></li><li><ol class="section"><li><a href="todo.html"><strong aria-hidden="true">2.1.</strong> ソフトウェアのバージョンなど (TODO)</a></li><li><a href="todo.html"><strong aria-hidden="true">2.2.</strong> 単一のソースファイル (TODO)</a></li><li><a href="todo.html"><strong aria-hidden="true">2.3.</strong> 利用可能なクレート (TODO)</a></li></ol></li><li><a href="todo.html"><strong aria-hidden="true">3.</strong> 開発環境の準備 (TODO)</a></li><li><ol class="section"><li><a href="todo.html"><strong aria-hidden="true">3.1.</strong> Rustツールチェインのインストール (TODO)</a></li><li><a href="todo.html"><strong aria-hidden="true">3.2.</strong> ソースコードエディタとデバッガの準備 (TODO)</a></li><li><a href="todo.html"><strong aria-hidden="true">3.3.</strong> cargo-generateテンプレート (TODO)</a></li><li><ol class="section"><li><a href="todo.html"><strong aria-hidden="true">3.3.1.</strong> cargo-generateのインストール (TODO)</a></li></ol></li></ol></li><li><a href="todo.html"><strong aria-hidden="true">4.</strong> コンテストの参加方法 (TODO)</a></li><li><ol class="section"><li><a href="todo.html"><strong aria-hidden="true">4.1.</strong> Cargoパッケージの作成 (TODO)</a></li><li><a href="todo.html"><strong aria-hidden="true">4.2.</strong> 利用するクレートの選択 (TODO)</a></li><li><a href="todo.html"><strong aria-hidden="true">4.3.</strong> テストケースの作成 (TODO)</a></li><li><a href="todo.html"><strong aria-hidden="true">4.4.</strong> プログラムの作成 (TODO)</a></li><li><a href="todo.html"><strong aria-hidden="true">4.5.</strong> プログラムのテスト (TODO)</a></li><li><a href="todo.html"><strong aria-hidden="true">4.6.</strong> プログラムの提出 (TODO)</a></li></ol></li><li><a href="todo.html"><strong aria-hidden="true">5.</strong> Tips（小技集） (TODO)</a></li><li><ol class="section"><li><a href="todo.html"><strong aria-hidden="true">5.1.</strong> クレートの利用例 (TODO)</a></li></ol></li><li><a href="atcoder-env/index.html"><strong aria-hidden="true">6.</strong> AtCoder運営者向けの情報 (TODO)</a></li><li><ol class="section"><li><a href="atcoder-env/supported-environment.html"><strong aria-hidden="true">6.1.</strong> 本書が想定する環境と利用形態 (TODO)</a></li><li><ol class="section"><li><a href="atcoder-env/differences-from-common-installation.html"><strong aria-hidden="true">6.1.1.</strong> 一般的なRust開発環境との違い (TODO)</a></li></ol></li><li><a href="atcoder-env/installation.html"><strong aria-hidden="true">6.2.</strong> インストール (TODO)</a></li><li><ol class="section"><li><a href="atcoder-env/installing-rust-toolchain.html"><strong aria-hidden="true">6.2.1.</strong> Rustツールチェインのインストール (TODO)</a></li><li><a href="atcoder-env/installing-rust-crates.html"><strong aria-hidden="true">6.2.2.</strong> クレート（外部ライブラリ）のビルドとインストール (TODO)</a></li><li><a href="atcoder-env/installing-crate-path-builder.html"><strong aria-hidden="true">6.2.3.</strong> クレート検索パス生成プログラムのビルドとインストール(TODO)</a></li><li><a href="atcoder-env/post-installation.html"><strong aria-hidden="true">6.2.4.</strong> 動作確認 (TODO)</a></li></ol></li><li><a href="atcoder-env/compiling-and-running-program.html"><strong aria-hidden="true">6.3.</strong> コンパイルコマンドと実行コマンド (TODO)</a></li><li><ol class="section"><li><a href="atcoder-env/about-compile-options.html"><strong aria-hidden="true">6.3.1.</strong> コンパイルオプションについて (TODO)</a></li></ol></li></ol></li><li><a href="contributors.html"><strong aria-hidden="true">7.</strong> コントリビュータ (TODO)</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">AtCoderコンテストにRustで参加するためのガイドブック</h1>
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#はじめに" id="はじめに">はじめに</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+<p>本書はAtCoderのコンテストにRustで参加するためのガイドブックです。</p>
+<ul>
+<li>AtCoderの環境について</li>
+<li>開発環境のセットアップ</li>
+<li>コンテストの参加方法
+<ul>
+<li>AtCoder向けテンプレートパッケージを使用したRustプログラムの開発方法</li>
+</ul>
+</li>
+<li>Tips（小技集）</li>
+<li>AtCoder運営者向けの情報
+<ul>
+<li>ジャッジサーバへのインストール手順</li>
+<li>提出されたプログラムのコンパイルおよび実行手順</li>
+</ul>
+</li>
+</ul>
+<h2><a class="header" href="#atcoderとは" id="atcoderとは">AtCoderとは？</a></h2>
+<p><strong>TODO</strong></p>
+<h2><a class="header" href="#なぜrustなのか" id="なぜrustなのか">なぜRustなのか？</a></h2>
+<p><strong>TODO</strong> (Pros/Cons)</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo" id="todo">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-1" id="todo-1">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-2" id="todo-2">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-3" id="todo-3">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-4" id="todo-4">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-5" id="todo-5">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-6" id="todo-6">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-7" id="todo-7">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-8" id="todo-8">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-9" id="todo-9">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-10" id="todo-10">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-11" id="todo-11">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-12" id="todo-12">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-13" id="todo-13">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-14" id="todo-14">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-15" id="todo-15">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-16" id="todo-16">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#todo-17" id="todo-17">TODO</a></h1>
+<p>このページは未作成です。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#atcoder運営者向けの情報" id="atcoder運営者向けの情報">AtCoder運営者向けの情報</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+<p>本章では以下の内容について説明します。</p>
+<ul>
+<li>Rustツールチェインやクレート（外部ライブラリ）をジャッジサーバへインストールする手順</li>
+<li>提出されたプログラムのコンパイルおよび実行手順</li>
+</ul>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#本書が想定する環境と利用形態" id="本書が想定する環境と利用形態">本書が想定する環境と利用形態</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+<h2><a class="header" href="#用語" id="用語">用語</a></h2>
+<p>本章で用いる用語には以下のものがあります。</p>
+<ul>
+<li><strong>ユーザプログラム</strong>
+<ul>
+<li>選手が提出したプログラムのこと</li>
+</ul>
+</li>
+<li><strong>Rustツールチェイン</strong>
+<ul>
+<li>Rustコンパイラ、ビルドツール兼パッケージマネージャのCargo、Rustの標準ライブラリなど</li>
+</ul>
+</li>
+<li><strong>Rustクレート</strong>
+<ul>
+<li>Rustのライブラリのこと。クレート（crate）木箱の意味。Rustユーザが作成した無数のクレートが、セントラルリポジトリのcrates.ioで公開されている</li>
+</ul>
+</li>
+</ul>
+<h2><a class="header" href="#想定する環境" id="想定する環境">想定する環境</a></h2>
+<p>本章ではAtCoderのジャッジサーバ環境として、以下のものを想定しています。</p>
+<ul>
+<li>Ubuntu 18.04 LTS x86_64</li>
+<li>ユーザプログラムは何らかのコンテナ内で実行される
+<ul>
+<li>インターネットなどのネットワークアクセスは不可</li>
+<li>物理メモリ、ディスクファイルサイズ、プロセス数などの制限あり</li>
+</ul>
+</li>
+<li>プログラミング言語ごとにファイルシステムが分かれているわけではない
+<ul>
+<li>たとえば提出言語としてBashやPythonを選択したときに、他の言語のコンパイラを実行するようなスクリプトを提出・実行できる</li>
+<li>（このようなプログラムを提出することは推奨はされないが、現状は可能となっている）</li>
+</ul>
+</li>
+<li>プログラムが作成したファイルはテストケースの実行ごとに削除される</li>
+<li>ユーザプログラムをコンパイル・実行するLinuxユーザは、単一のユーザなのか、複数のユーザなのかは不明
+<ul>
+<li>本書では複数ユーザの場合でも対応できるよう、Rustツールチェインやクレートを、ジャッジサーバ上の全Linuxユーザがread-onlyでアクセスできる場所（<code>/usr/local/lib/rust</code>）にインストールする</li>
+</ul>
+</li>
+</ul>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#一般的なrust開発環境との違い" id="一般的なrust開発環境との違い">一般的なRust開発環境との違い</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#インストール" id="インストール">インストール</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+<ul>
+<li>Rustツールチェインのインストール</li>
+<li>クレート（外部ライブラリ）のビルドとインストール</li>
+<li>クレートの検索パス生成プログラムのビルドとインストール</li>
+<li>インストール後の動作確認</li>
+</ul>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#rustツールチェインのインストール" id="rustツールチェインのインストール">Rustツールチェインのインストール</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+<ul>
+<li>Rustツールチェインを<code>/usr/local/lib/rust</code>配下にインストール</li>
+<li>インストール時にインターネット接続が必要</li>
+</ul>
+<h2><a class="header" href="#依存ソフトウェアのインストール" id="依存ソフトウェアのインストール">依存ソフトウェアのインストール</a></h2>
+<p>Rustツールチェインのインストールに先立って、Rustプログラムのリンクやクレートのビルドに必要なソフトウェアをインストールします。</p>
+<ul>
+<li>Rustツールチェインやクレートのダウンロードに必要なツール：curl, git-core</li>
+<li>Rustプログラムのリンク時に必要なツール：gcc, binutils</li>
+<li>一部のRustクレートや関連ツールのビルドに必要なツール：make, pkg-config</li>
+<li>一部のRustクレートや関連ツールのビルドに必要なライブラリ：libssl-dev</li>
+</ul>
+<pre><code class="language-console">$ sudo apt update
+$ sudo apt install -y curl git-core gcc binutils make pkg-config libssl-dev
+</code></pre>
+<h2><a class="header" href="#rustツールチェインのインストール-1" id="rustツールチェインのインストール-1">Rustツールチェインのインストール</a></h2>
+<pre><code class="language-console">$ sudo -i
+
+# whoami
+root
+
+# export RUST_TOOLCHAIN=1.35.0
+# export RUST_HOME=/usr/local/lib/rust
+# export RUSTUP_HOME=${RUST_HOME}/rustup
+# export CARGO_HOME=${RUST_HOME}/cargo
+
+# mkdir -p ${RUST_HOME}
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
+    sh -s -- -y --default-toolchain &quot;${RUST_TOOLCHAIN}&quot; --no-modify-path
+</code></pre>
+<pre><code class="language-console">info: downloading installer
+info: syncing channel updates for '1.35.0-x86_64-unknown-linux-gnu'
+info: latest update on 2019-05-23, rust version 1.35.0 (3c235d560 2019-05-20)
+info: downloading component 'rustc'
+ 88.4 MiB /  88.4 MiB (100 %)  10.9 MiB/s in 10s ETA:  0s
+...（中略）...
+
+   1.35.0 installed - rustc 1.35.0 (3c235d560 2019-05-20)
+
+
+Rust is installed now. Great!
+
+To get started you need Cargo's bin directory (/usr/local/lib/rust/cargo/bin)
+in your PATH environment variable.
+
+To configure your current shell run source /usr/local/lib/rust/cargo/env
+</code></pre>
+<h2><a class="header" href="#コマンド検索パスの設定" id="コマンド検索パスの設定">コマンド検索パスの設定</a></h2>
+<p>Rustを使用させたいLinuxユーザのシェルの初期設定ファイル（例<code>.bashrc</code>）に以下のコマンドを追加します。</p>
+<pre><code class="language-bash">source /usr/local/lib/rust/cargo/env
+</code></pre>
+<p>これにより<code>/usr/local/lib/rust/cargo/bin</code>がコマンド検索パス（<code>PATH</code>）に追加されます。</p>
+<h2><a class="header" href="#インストール結果の確認" id="インストール結果の確認">インストール結果の確認</a></h2>
+<pre><code class="language-console">## 一般ユーザで実行
+$ source /usr/local/lib/rust/cargo/env
+
+$ which rustc
+/usr/local/lib/rust/cargo/bin/rustc
+
+$ rustc -V
+rustc 1.35.0 (3c235d560 2019-05-20)
+
+$ cargo -V
+cargo 1.35.0 (6f3e9c367 2019-04-04)
+
+$ rustup -V
+rustup 1.18.3 (435397f48 2019-05-22)
+</code></pre>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#クレート外部ライブラリのビルドとインストール" id="クレート外部ライブラリのビルドとインストール">クレート（外部ライブラリ）のビルドとインストール</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+<ul>
+<li>対象となるクレートのソースコードを<code>/usr/local/lib/rust/lib</code>にダウンロードする</li>
+<li>クレートをビルドする。
+ビルドの成果物（rlibファイル）は<code>/usr/local/lib/rust/lib/target/release</code>に出力される</li>
+<li>インストール時にインターネット接続が必要</li>
+</ul>
+<pre><code class="language-console">$ sudo -i
+# whoami
+root
+
+# export RUST_HOME=/usr/local/lib/rust
+# git clone https://github.com/rust-lang-ja/atcoder-rust-crates.git ${RUST_HOME}/lib
+</code></pre>
+<pre><code class="language-console"># whoami
+root
+
+# cd ${RUST_HOME}/lib
+# ./build.sh
+</code></pre>
+<p>ビルドに成功すると以下のように表示されます。</p>
+<pre><code class="language-console"># ./build.sh
++ git submodule update --init
++ cargo clean
++ cargo update
++ cargo build --release --frozen
+Compiling autocfg v0.1.4
+...（中略）...
+
+Finished release [optimized] target(s) in 1m 39s
+$
+</code></pre>
+<pre><code class="language-console">$ find target/release/deps/ -name '*.rlib' | wc -l
+58
+
+$ ./target/release/main
+...
+</code></pre>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#クレート検索パス生成プログラムのビルドとインストール" id="クレート検索パス生成プログラムのビルドとインストール">クレート検索パス生成プログラムのビルドとインストール</a></h1>
+<p><strong>TODO</strong></p>
+<pre><code class="language-console">$ sudo -i
+
+# whoami
+root
+
+# cargo install --git https://github.com/rust-lang-ja/atcorder-rustc-dep-option-generator.git
+</code></pre>
+<pre><code class="language-console">## 一般ユーザで実行
+$ source /usr/local/lib/rust/cargo/env
+
+$ which gen-deps-compile-options
+/usr/local/lib/rust/cargo/bin/gen-deps-compile-options
+
+$ export RUST_LIB=/usr/local/lib/rust/lib
+$ gen-deps-compile-options ${RUST_LIB}/Cargo.toml ${RUST_LIB}/target/release/deps
+...
+
+## ↑ Errorの文字が表示されなければOK
+
+$ echo $?
+0
+</code></pre>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#インストール後の動作確認" id="インストール後の動作確認">インストール後の動作確認</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#コンパイルコマンドと実行コマンド" id="コンパイルコマンドと実行コマンド">コンパイルコマンドと実行コマンド</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#コンパイルオプションについて" id="コンパイルオプションについて">コンパイルオプションについて</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+<!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#コントリビュータ" id="コントリビュータ">コントリビュータ</a></h1>
+<p><strong>TODO</strong> このページは書きかけです。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3001");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload(true); // force reload from server (not from cache)
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
