@@ -3,22 +3,21 @@ version: 2
 jobs:
   build:
     docker:
-      - image: hrektts/mdbook:0.3.0
+      - image: quay.io/rust-lang-ja/circleci:atcoder-resources
     parallelism: 1
     steps:
       - checkout
-      - run: apt-get update && apt-get install -y git-core
       # Remove .gitconfig added by Circle CI as cargo doesn't support ssh authorization
       - run: rm -f ~/.gitconfig
       - run: mdbook build
       - run: mdbook test
       - store_artifacts:
           path: docs
-      # - deploy:
-      #     name: If master branch, publish to GitHub Page
-      #     command: |
-      #       if [ "x_${CIRCLE_BRANCH}" == "x_master" ]; then
-      #         git config user.name "bn-e (CircleCI)"
-      #         git config user.email "bn-e@hibaridb.org"
-      #         ./tools/circleci/push-to-master.sh
-      #       fi
+      - deploy:
+          name: If master branch, publish to GitHub Page
+          command: |
+            if [ "x_${CIRCLE_BRANCH}" == "x_master" ]; then
+              git config user.name "bn-e (CircleCI)"
+              git config user.email "bn-e@hibaridb.org"
+              ./tools/circleci/push-to-master.sh
+            fi
