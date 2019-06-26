@@ -6,7 +6,7 @@
 
 > ジャッジの際には、`cargo`を使用せず、`rustc`に適切なオプション（ライブラリ検索パスなど）を与えて実行することで、事前にコンパイルしておいた`rlib`ファイルとリンクさせます。
 
-本ページではこの`rustc`のコマンドライン・オプションを生成するツールである`rustc-dep-option-generator`のインストール手順を説明します。
+このページでは`rustc`のコマンドライン・オプションを生成するツールである`rustc-dep-option-generator`のインストール手順を説明します。
 このツールはRustで書かれています。
 
 
@@ -68,7 +68,7 @@ $ which rustc-dep-option-generator
 $ echo $RUST_HOME
 /usr/local/lib/rust
 
-$ export RUST_LIB=${RUST_HOME}/lib
+$ RUST_LIB=${RUST_HOME}/lib
 $ rustc-dep-option-generator ${RUST_LIB}/Cargo.toml ${RUST_LIB}/target/release/deps
 --extern arrayvec=/usr/local/lib/rust/lib/target/release/deps/libarrayvec-cc9c39e9e371e142.rlib
 --extern hashbrown=/usr/local/lib/rust/lib/target/release/deps/libhashbrown-106405935e6124e3.rlib
