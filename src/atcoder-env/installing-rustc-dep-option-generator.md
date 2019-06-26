@@ -1,23 +1,33 @@
 <!-- -*- coding:utf-8-unix -*- -->
 
-# クレート検索パス生成プログラムのビルドとインストール
+# クレート検索パス生成ツールのインストール
 
-**TODO** このページは書きかけです。
+前のページで以下のことを説明しました。
 
-- `rustc-dep-option-generator`コマンドをビルドしてインストールします。
+> ジャッジの際には、`cargo`を使用せず、`rustc`に適切なオプション（ライブラリ検索パスなど）を与えて実行することで、事前にコンパイルしておいた`rlib`ファイルとリンクさせます。
+
+本ページではこの`rustc`のコマンドライン・オプションを生成するツールである`rustc-dep-option-generator`のインストール手順を説明します。
+このツールはRustで書かれています。
 
 
 ## 依存ソフトウェアのインストール
 
-ツールのビルドに必要なシステムライブラリをインストールします。
+ツールが依存するシステムライブラリをインストールします。
 
 ```console
 $ sudo apt update
 $ sudo apt install -y libssl-dev
 ```
 
+なお`libssl-dev`はツールが依存しているクレートの1つが要求しているためにインストールしますが、このツールではその機能は使いません。
+ツール実行時のネットワーク・アクセスは不要です。
 
-## ツールのビルドとインストール
+
+## ツールのインストール
+
+`cargo install`コマンドでインストールします。
+以下のコマンドを実行すると、GitHubのリポジトリからツールのソースコードがダウンロードされ、ビルドが実行されます。
+ビルドに成功すると、生成されたバイナリ（実行可能ファイル）が`$CARGO_HOME/bin`配下にインストールされます。
 
 ```console
 $ sudo -i
@@ -28,7 +38,7 @@ root
 # cargo install --git https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git
 ```
 
-ビルドとインストールに成功すると以下のように表示されます。
+インストールの成功時は以下のように表示されます。
 
 ```console
 # cargo install --git https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git
@@ -44,7 +54,11 @@ root
   Installing /usr/local/lib/rust/cargo/bin/rustc-dep-option-generator
 ```
 
+
 ## インストール後の動作確認
+
+ツールが動作することを確認しましょう。
+以下のコマンドを実行します。
 
 ```console
 ## 一般ユーザで実行
@@ -56,10 +70,18 @@ $ echo $RUST_HOME
 
 $ export RUST_LIB=${RUST_HOME}/lib
 $ rustc-dep-option-generator ${RUST_LIB}/Cargo.toml ${RUST_LIB}/target/release/deps
-...
+--extern arrayvec=/usr/local/lib/rust/lib/target/release/deps/libarrayvec-cc9c39e9e371e142.rlib
+--extern hashbrown=/usr/local/lib/rust/lib/target/release/deps/libhashbrown-106405935e6124e3.rlib
+...（中略）...
+-L dependency=/usr/local/lib/rust/lib/target/release/deps
 
 ## ↑ Errorの文字が表示されなければOK
+##
+## エラーの例
+## Error: StringError("failed to find appropriate path for /arrayvec-0.4.10/")
 
 $ echo $?
-0
+0   # 0ならOK
 ```
+
+これでインストール作業は終了です。
