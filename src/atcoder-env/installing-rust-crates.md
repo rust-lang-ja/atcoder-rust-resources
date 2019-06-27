@@ -143,6 +143,6 @@ $
 
 ```console
 $ find target/release/deps/ -name '*.rlib' | wc -l
-58   # この数字を確認
+59   # この数字を確認
 ```
 
