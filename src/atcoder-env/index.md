@@ -7,6 +7,8 @@
 - Rustツールチェインやクレート（外部ライブラリ）をジャッジサーバへインストールする手順
 - 提出されたプログラムのコンパイルおよび実行手順
 
+本章のMarkdownソースファイルはGitHub [rust-lang-ja/atcoder-rust-resources][gh]にあります。
 内容について質問などがありましたら、[GitHub Issue][gh-issue]などでご連絡ください。
 
+[gh]: https://github.com/rust-lang-ja/atcoder-rust-resources
 [gh-issue]: https://github.com/rust-lang-ja/atcoder-rust-resources/issues

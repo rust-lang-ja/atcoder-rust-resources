@@ -15,18 +15,19 @@
 - 他のいくつかの言語の標準ライブラリにあって、Rustにない機能を提供するもの
   - 例：C++の`lower_bound`や`BitSet`に相当する機能
 - 競技プログラミングの面白さを損なわない範囲（ズルにならない範囲）で便利になるもの
-  - 例：Rustでは入出力関連の記述が煩雑になりがちなので、それらを簡潔に記述できるマクロ集
+  - 例：Rustでは入力関連の記述が煩雑になりがちなので、それらを簡潔に記述できるマクロ集
 - セキュリティなどの理由から高速性が犠牲になっている機能を置き換えるもの
   - 例：標準ライブラリのハッシュ関数はDoS攻撃を避けるために暗号強度があり、計算量が多い。
     競技プログラミングでは暗号強度は求められず、より計算量の少ないハッシュ関数で十分
 
 **AtCoder運営者様へのお願い**
 
-対象クレートの一覧は このページ（**TODO**、[仮のページはこちら](https://github.com/rust-lang-ja/atcoder-rust-resources/wiki/Crates-2019)） にあります。
-インストールして問題がないか、事前にレビューをお願いいたします。
+対象クレートの一覧は[このページ](crates-2019)にあります。
+ジャッジサーバで使用して問題ない内容か、インストール前にレビューをお願いいたします。
 
 質問や要望などがありましたら、[GitHub Issue][gh-issue]などでご連絡ください。
 
+[crates-2019]: https://github.com/rust-lang-ja/atcoder-rust-resources/wiki/Crates-2019
 [gh-issue]: https://github.com/rust-lang-ja/atcoder-rust-resources/issues
 
 
@@ -55,11 +56,11 @@ $HOME   # ユーザのホームディレクトリ
             |-- deps
             |   |-- X.rlib  # コンパイル済みのクレート
             |   └-- Y.rlib
-            └-- main        # コンパイル、リンク済みの実行可能ファイル（バイナリ）
+            └-- main        # コンパイル、リンク済みの実行ファイル
 ```
 
 この方法ではユーザプログラムをコンパイルする際にクレートもコンパイルします。
-もしジャッジサーバでこの方法をとると、ジャッジの際のサーバ負荷が増えてしまいます。
+もしジャッジサーバでこの方法をとると、ユーザプログラムが提出されるごとにクレートがコンパイルされることになり、サーバの負荷が増えてしまいます。
 
 そこで今回は各ファイルを以下のように配置し、クレートのコンパイルは導入時に済ませておくことにします。
 
@@ -88,18 +89,18 @@ $RUST_HOME (/usr/local/lib/rust)
 $HOME             # ユーザのホームディレクトリ
 └-- WORKAREA      # ジャッジ用の一時ディレクトリ
     |-- main.rs   # ユーザプログラム（提出されたプログラム）のソースコード
-    └-- main      # コンパイル、リンク済みの実行可能ファイル（バイナリ）
+    └-- main      # コンパイル、リンク済みの実行ファイル
 ```
 
 
 ## クレートのコンパイルに使用するCargoパッケージのダウンロード
 
 それではインストール作業に入りましょう。
-クレートの事前コンパイルに使用するCargoパッケージをGitHubからダウンロードし、`/usr/local/lib/rust/lib`に配置します。
+クレートの事前コンパイルに使用するCargoパッケージは、GitHub [rust-lang-ja/atcoder-rust-base（ja-all-enabledブランチ）][rust-base-branch]に用意されています。
 このパッケージには`Cargo.toml`ファイルなどが含まれており、インストール対象のクレートがすでに設定されています。
 （`[dependencies]`セクションに書かれています）
 
-以下のコマンドを実行します。
+このリポジトリを`git clone`し、`/usr/local/lib/rust/lib`に配置します。以下のコマンドを実行します。
 
 ```console
 ## rootユーザで作業する
@@ -116,6 +117,7 @@ root
     ${RUST_HOME}/lib
 ```
 
+[rust-base-branch]: https://github.com/rust-lang-ja/atcoder-rust-base/tree/ja-all-enabled
 
 
 ## クレートのコンパイル
@@ -142,7 +144,8 @@ $
 以下のコマンドを実行します。
 
 ```console
-$ find target/release/deps/ -name '*.rlib' | wc -l
-59   # この数字を確認
+$ find target/release/deps/ -type f | egrep -c '\.(rlib|so)$'
+66
+# ↑ 上の数字を確認
 ```
 
