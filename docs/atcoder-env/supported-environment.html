@@ -242,7 +242,12 @@
 <li>コンパイルしてできた<code>rlib</code>ファイルをジャッジサーバ上の全Linuxユーザがread-onlyでアクセスできる場所に保存する</li>
 </ul>
 </li>
-<li>ジャッジの際にはユーザプログラムのコンパイルに<code>cargo</code>を介さずに<code>rustc</code>を直接実行することで、クレートが毎回コンパイルされることを防ぐ</li>
+<li>ジャッジの際にはユーザプログラムのコンパイルに<code>cargo</code>を介さずに<code>rustc</code>を直接実行する
+<ul>
+<li>ジャッジの際にクレートのソースファイルがダウンロードされることがないので、選手が使用するクレートを制限できる</li>
+<li>クレートが毎回コンパイルされることが防げる</li>
+</ul>
+</li>
 </ul>
 <p>Rustツールチェインや<code>rlib</code>ファイルは<code>/usr/local/lib/rust</code>ディレクトリ配下に置きます。</p>
 <p>なお、選手が使用するクレートを制限することは、本章で用いる方法の他に、<a href="https://crates.io/crates/cargo-vendor"><code>cargo-vendor</code></a>という<code>cargo</code>の拡張コマンドを使うことでも実現できます。しかしその方法ではジャッジの際にクレートが毎回コンパイルされることは防げません。</p>
