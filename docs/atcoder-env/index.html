@@ -157,8 +157,17 @@
 <li>Rust 1.35.0</li>
 <li>インストールするクレート：<a href="https://github.com/rust-lang-ja/atcoder-rust-resources/wiki/Crates-2019">このページ</a>を参照</li>
 </ul>
-<p>ユーザプログラム（選手が提出したプログラム）がクレートを使用しない場合、インストールしたクレートはユーザプログラムの実行ファイルになんの影響も与えません。
-したがって素のRust環境を別途用意する必要はありません。</p>
+<h2><a class="header" href="#素のrust設定について" id="素のrust設定について">素のRust設定について</a></h2>
+<p><a href="https://docs.google.com/spreadsheets/d/1PmsqufkF3wjKN6g1L0STS80yP4a6u-VdGiEv5uOHe0M/edit">AtCoder 2019/7 Language Updateのスプレッドシート</a>では、従来のようにクレートがインストールされていない「素のRust環境」の併設を望む声もあるようです。</p>
+<p>本章の内容に従って環境をセットアップした場合に、ユーザプログラム（選手が提出したプログラム）が従来のようにクレートを使用しないなら、インストールしたクレートはないものと同じになります。
+使用しないクレートはユーザプログラムの実行ファイルになんら影響も与えません。
+素のRust環境を別途用意する必要はなさそうに思えます。</p>
+<p>もしそれでも心配という声があるようなら、素のRust環境を別途用意することも可能です。
+その場合は以下の環境変数の値を変える（または<code>unset</code>する）ことで、本章でセットアップする環境と、素のRust環境を切り替えることができます。</p>
+<table><thead><tr><th align="left">環境変数</th><th align="left">本章でセットアップする環境（クレートを使用できる環境）を使用する場合</th><th align="left">素のRust環境を使用する場合</th></tr></thead><tbody>
+<tr><td align="left"><code>RUSTUP_HOME</code></td><td align="left"><code>/usr/local/lib/rust/rustup</code></td><td align="left"><code>rustup</code>をデフォルトの場所にインストールしたのなら<code>unset RUSTUP_HOME</code></td></tr>
+<tr><td align="left"><code>CARGO_HOME</code></td><td align="left"><code>/usr/local/lib/rust/cargo</code></td><td align="left"><code>cargo</code>をデフォルトの場所にインストールしたのなら<code>unset CARGO_HOME</code></td></tr>
+</tbody></table>
 <h2><a class="header" href="#内容についてのお問い合わせなど" id="内容についてのお問い合わせなど">内容についてのお問い合わせなど</a></h2>
 <p>内容について質問などがありましたら、<a href="https://github.com/rust-lang-ja/atcoder-rust-resources/issues">GitHub Issue</a>などでご連絡ください。</p>
 <p>なお本章のMarkdownソースファイルはGitHub <a href="https://github.com/rust-lang-ja/atcoder-rust-resources">rust-lang-ja/atcoder-rust-resources</a>にあります。</p>
