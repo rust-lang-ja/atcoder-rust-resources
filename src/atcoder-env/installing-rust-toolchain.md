@@ -7,11 +7,10 @@
 
 ## Rustバージョン
 
-今回の言語アップデートでは2019年5月20日にリリースされた1.35.0をインストールします。
+今回の言語アップデートでは2019年7月4日にリリースされた1.36.0をインストールします。
 
-Rustの安定版（stable版）は6週間ごとにリリースされますので、次のバージョンの1.36.0のリリース日は7月4日になります。
-言語アップデート作業は2019年7月初旬から始まりましたので、1.36.0をインストールすることも可能です。
-しかし今回は安全のために、リリースされてから少し日が経っている1.35.0を選択します。
+Rustの安定版（stable版）は6週間ごとにリリースされますので、既に次のバージョンの1.37.0が8月15日にリリースされています。
+しかし今回は安全のために、リリースされてから日が経っている1.36.0を選択します。
 
 ツールチェインのインストールには`rustup`というRustプロジェクト公式のコマンドラインツールを使います。
 これにより特定のバージョンのRustをインストールすることが可能になります。
@@ -64,7 +63,7 @@ $ sudo -i
 # whoami
 root
 
-# RUST_TOOLCHAIN=1.35.0
+# RUST_TOOLCHAIN=1.36.0
 # export RUST_HOME=/usr/local/lib/rust
 # export RUSTUP_HOME=${RUST_HOME}/rustup
 # export CARGO_HOME=${RUST_HOME}/cargo
@@ -81,13 +80,13 @@ root
 
 ```console
 info: downloading installer
-info: syncing channel updates for '1.35.0-x86_64-unknown-linux-gnu'
-info: latest update on 2019-05-23, rust version 1.35.0 (3c235d560 2019-05-20)
+info: syncing channel updates for '1.36.0-x86_64-unknown-linux-gnu'
+info: latest update on 2019-07-04, rust version 1.36.0 (a53f9df32 2019-07-03)
 info: downloading component 'rustc'
  88.4 MiB /  88.4 MiB (100 %)  10.9 MiB/s in 10s ETA:  0s
 ...（中略）...
 
-   1.35.0 installed - rustc 1.35.0 (3c235d560 2019-05-20)
+   1.36.0 installed - rustc 1.36.0 (a53f9df32 2019-07-03)
 
 
 Rust is installed now. Great!
@@ -134,10 +133,10 @@ $ which rustc
 
 ## バージョンなどを確認
 $ rustc -V
-rustc 1.35.0 (3c235d560 2019-05-20)
+rustc 1.36.0 (a53f9df32 2019-07-03)
 
 $ cargo -V
-cargo 1.35.0 (6f3e9c367 2019-04-04)
+cargo 1.36.0 (c4fcfb725 2019-05-15)
 
 $ rustup -V
 rustup 1.18.3 (435397f48 2019-05-22)
@@ -145,8 +144,8 @@ rustup 1.18.3 (435397f48 2019-05-22)
 $ rustup show
 Default host: x86_64-unknown-linux-gnu
 
-1.35.0-x86_64-unknown-linux-gnu (default)
-rustc 1.35.0 (3c235d560 2019-05-20)
+1.36.0-x86_64-unknown-linux-gnu (default)
+rustc 1.36.0 (a53f9df32 2019-07-03)
 
 ## Rustプログラムのビルドと実行ができることを確認
 $ cd /tmp
