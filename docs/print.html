@@ -234,7 +234,7 @@
 </ul>
 <h2><a class="header" href="#rustツールチェインやクレートの内容など" id="rustツールチェインやクレートの内容など">Rustツールチェインやクレートの内容など</a></h2>
 <ul>
-<li>Rust 1.35.0</li>
+<li>Rust 1.36.0</li>
 <li>インストールするクレート：<a href="https://github.com/rust-lang-ja/atcoder-rust-resources/wiki/Crates-2019">このページ</a>を参照</li>
 </ul>
 <h2><a class="header" href="#内容についてのお問い合わせなど" id="内容についてのお問い合わせなど">内容についてのお問い合わせなど</a></h2>
@@ -386,10 +386,9 @@ $ rustc --edition=2018 -C opt-level=3 \
 <h1><a class="header" href="#rustツールチェインのインストール" id="rustツールチェインのインストール">Rustツールチェインのインストール</a></h1>
 <p>このページではAtCoderのジャッジサーバにRustツールチェインをインストールする手順を説明します。</p>
 <h2><a class="header" href="#rustバージョン" id="rustバージョン">Rustバージョン</a></h2>
-<p>今回の言語アップデートでは2019年5月20日にリリースされた1.35.0をインストールします。</p>
-<p>Rustの安定版（stable版）は6週間ごとにリリースされますので、次のバージョンの1.36.0のリリース日は7月4日になります。
-言語アップデート作業は2019年7月初旬から始まりましたので、1.36.0をインストールすることも可能です。
-しかし今回は安全のために、リリースされてから少し日が経っている1.35.0を選択します。</p>
+<p>今回の言語アップデートでは2019年7月4日にリリースされた1.36.0をインストールします。</p>
+<p>Rustの安定版（stable版）は6週間ごとにリリースされますので、既に次のバージョンの1.37.0が8月15日にリリースされています。
+しかし今回は安全のために、リリースされてから日が経っている1.36.0を選択します。</p>
 <p>ツールチェインのインストールには<code>rustup</code>というRustプロジェクト公式のコマンドラインツールを使います。
 これにより特定のバージョンのRustをインストールすることが可能になります。</p>
 <h2><a class="header" href="#ツールチェインの内容とインストール先" id="ツールチェインの内容とインストール先">ツールチェインの内容とインストール先</a></h2>
@@ -426,7 +425,7 @@ $ sudo apt install -y curl git-core gcc binutils make pkg-config
 # whoami
 root
 
-# RUST_TOOLCHAIN=1.35.0
+# RUST_TOOLCHAIN=1.36.0
 # export RUST_HOME=/usr/local/lib/rust
 # export RUSTUP_HOME=${RUST_HOME}/rustup
 # export CARGO_HOME=${RUST_HOME}/cargo
@@ -440,13 +439,13 @@ root
 </code></pre>
 <p>インストールに成功すると以下のように表示されます。</p>
 <pre><code class="language-console">info: downloading installer
-info: syncing channel updates for '1.35.0-x86_64-unknown-linux-gnu'
-info: latest update on 2019-05-23, rust version 1.35.0 (3c235d560 2019-05-20)
+info: syncing channel updates for '1.36.0-x86_64-unknown-linux-gnu'
+info: latest update on 2019-07-04, rust version 1.36.0 (a53f9df32 2019-07-03)
 info: downloading component 'rustc'
  88.4 MiB /  88.4 MiB (100 %)  10.9 MiB/s in 10s ETA:  0s
 ...（中略）...
 
-   1.35.0 installed - rustc 1.35.0 (3c235d560 2019-05-20)
+   1.36.0 installed - rustc 1.36.0 (a53f9df32 2019-07-03)
 
 
 Rust is installed now. Great!
@@ -482,10 +481,10 @@ $ which rustc
 
 ## バージョンなどを確認
 $ rustc -V
-rustc 1.35.0 (3c235d560 2019-05-20)
+rustc 1.36.0 (a53f9df32 2019-07-03)
 
 $ cargo -V
-cargo 1.35.0 (6f3e9c367 2019-04-04)
+cargo 1.36.0 (c4fcfb725 2019-05-15)
 
 $ rustup -V
 rustup 1.18.3 (435397f48 2019-05-22)
@@ -493,8 +492,8 @@ rustup 1.18.3 (435397f48 2019-05-22)
 $ rustup show
 Default host: x86_64-unknown-linux-gnu
 
-1.35.0-x86_64-unknown-linux-gnu (default)
-rustc 1.35.0 (3c235d560 2019-05-20)
+1.36.0-x86_64-unknown-linux-gnu (default)
+rustc 1.36.0 (a53f9df32 2019-07-03)
 
 ## Rustプログラムのビルドと実行ができることを確認
 $ cd /tmp
@@ -515,7 +514,7 @@ $ rm -rf /tmp/hello
 <ul>
 <li>Rust の標準ライブラリにないが、他のいくつかの言語では標準の機能であって、かつ競プロ以外でも広く使われているもの
 <ul>
-<li>例：C++の<code>lower_bound</code>や<code>BitSet</code>に相当する機能</li>
+<li>例：C++の<code>lower_bound</code>や<code>bitset</code>に相当する機能</li>
 </ul>
 </li>
 <li>競技プログラミング特化型だが、競プロの面白さを損なわない範囲（ズルにならない範囲）で便利になるもの
