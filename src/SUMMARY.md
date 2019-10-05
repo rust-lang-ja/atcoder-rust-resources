@@ -28,4 +28,6 @@
     - [クレートのコンパイルとインストール](./atcoder-env/installing-rust-crates.md)
     - [（オプション）クレート検索パス生成ツールのインストール](./atcoder-env/installing-rustc-dep-option-generator.md))
   - [コンパイルコマンドと実行コマンド](./atcoder-env/compiling-and-running-program.md)
+      - [rustcを利用する](./atcoder-env/compiling-and-running-using-rustc.md)
+      - [cargoを利用する](./atcoder-env/compiling-and-running-using-cargo.md)
 - [コントリビュータ (TODO)](./contributors.md)
