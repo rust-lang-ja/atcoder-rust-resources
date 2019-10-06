@@ -10,7 +10,7 @@
 
 ## Rustツールチェインやクレートの内容など
 
-- Rust 1.36.0
+- Rust 1.38.0
 - インストールするクレート：[このページ][crates-2019]を参照
 
 [crates-2019]: https://github.com/rust-lang-ja/atcoder-rust-resources/wiki/Crates-2019
