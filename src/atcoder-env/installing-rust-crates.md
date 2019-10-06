@@ -135,6 +135,40 @@ root
 [rust-base-branch]: https://github.com/rust-lang-ja/atcoder-rust-base/tree/ja-all-enabled
 
 
+## クレートのテスト
+
+一度、導入したクレートが正しく動作するのかを確認しましょう。
+
+テストコードは`$RUST_HOME/lib/src/main.rs`にあります。実際に導入したクレートに応じて適宜テストをコメントアウトしてください。テストの実行には、`cargo test`コマンドを入力します。
+
+```console
+# cd $RUST_HOME/lib
+$ cargo test --release
+   Compiling atcoder-rust-base v0.1.0 (...)
+    Finished release [optimized] target(s) in 7.31s
+     Running target\release\deps\...
+
+running 11 tests
+test test_ascii ... okYes
+Yes
+
+test test_bitset_fixed ... ok
+test test_modtype ... ok
+test test_ordered_float ... ok
+test test_permutohedron ... ok
+test test_itertools ... ok
+test test_rand_family ... ok
+test test_proconio ... ok
+test test_regex ... ok
+test test_rustc_hash ... ok
+test test_superslice ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+```
+
+多少表示されるテストの個数は異なるかもしれませんが、一番下の行が`test result: ok.`で`0 failed;`となっていれば問題ありません。
+
+
 ## クレートのコンパイル
 
 クレートをコンパイルしましょう。
