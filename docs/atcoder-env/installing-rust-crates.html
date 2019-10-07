@@ -251,6 +251,40 @@ root
     --branch ja-all-enabled --single-branch \
     ${RUST_HOME}/lib
 </code></pre>
+<h2><a class="header" href="#クレートを削除する" id="クレートを削除する">クレートを削除する</a></h2>
+<p>検討の結果、一部のクレートは残念ながら導入すべきでないクレートだと判断されることもあるかと思います。そういった場合は<a href="https://github.com/rust-lang-ja/atcoder-rust-resources/issues">GitHub Issue</a>を通してご連絡頂ければ当該クレートとそれに関連するテストの削除等の対応をさせていただきますが、一応、その方法も説明しておこうと思います。</p>
+<p>例えば、競プロ入出力補助の<code>proconio</code>が相応しくないので削除したいとなったとします。まずはこのクレートを依存から削除する必要があります。<code>git clone</code>したディレクトリ内の<code>Cargo.toml</code>ファイルを開き、<code>[dependencies]</code>セクションを見つけてください。すると例えば次のようにクレートが並んでいるかと思います。</p>
+<pre><code class="language-toml">[dependencies]
+# AtCoder 2019年言語アップデート以降に使用できるクレート
+
+# 競技プログラミングの入出力サポート
+proconio = { version = &quot;=0.3.4&quot;, features = [&quot;derive&quot;] }
+
+# f64のOrd/Eq実装
+ordered-float = &quot;=1.0.2&quot;
+
+(...以下略...)
+</code></pre>
+<p>クレートによってオプションが付せられていることもありますが、<code>{削除したいクレート名} = ...</code>となっている行をコメントアウトまたは削除してください。</p>
+<p>続いてテストを削除します。<code>src/main.rs</code>ファイルを開くと、ずらっとテスト関数が並んでいます。これらの関数から<code>run_{削除したいクレート名}</code>と<code>test_{削除したいクレート名}</code>という関数を丸ごと削除してください。<code>test_{削除したいクレート名}</code>関数は、その前の行に<code>#[test]</code>アトリビュートがついているかと思いますので、それごと削除してください。</p>
+<p>そして<code>main()</code>関数内にある<code>run_{削除したいクレート名}</code>関数を呼び出す文を削除してください。</p>
+<p>基本的にはこれで削除は完了です。この後クレートのテストを行いますが、ここで<code>unresolved import</code>系のエラーが出るようなら適宜削除してください。</p>
+<p><code>jemallocator</code>系を削除しようと考えている場合は、テストが別のファイルに分かれているため、もう少しだけ追加の手順が必要です。まずは<code>Cargo.toml</code>から下記の記述を削除します。</p>
+<pre><code class="language-toml">[features]
+jemalloc = [&quot;jemalloc-ctl&quot;, &quot;jemallocator&quot;]
+default = [&quot;jemalloc&quot;]
+</code></pre>
+<pre><code class="language-toml"># 代替ヒープアロケータ。条件によってはシステムアロケータより速いことも
+[target.'cfg(not(windows))'.dependencies]
+jemallocator = { version = &quot;=0.3.2&quot;, optional = true }
+jemalloc-ctl = { version = &quot;=0.3.3&quot;, optional = true }
+</code></pre>
+<pre><code class="language-toml">[[test]]
+name = &quot;jemallocator&quot;
+path = &quot;tests/test_jemallocator.rs&quot;
+required-features = [&quot;jemalloc&quot;]
+</code></pre>
+<p>続けて<code>tests/test_jemallocator.rs</code>というファイルをファイルごと削除してください。</p>
 <h2><a class="header" href="#クレートのテスト" id="クレートのテスト">クレートのテスト</a></h2>
 <p>一度、導入したクレートが正しく動作するのかを確認しましょう。</p>
 <p>テストコードは<code>$RUST_HOME/lib/src/main.rs</code>にあります。実際に導入したクレートに応じて適宜テストをコメントアウトしてください。テストの実行には、<code>cargo test</code>コマンドを入力します。</p>
