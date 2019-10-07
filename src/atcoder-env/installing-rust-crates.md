@@ -141,7 +141,7 @@ root
 
 例えば、競プロ入出力補助の`proconio`が相応しくないので削除したいとなったとします。まずはこのクレートを依存から削除する必要があります。`git clone`したディレクトリ内の`Cargo.toml`ファイルを開き、`[dependencies]`セクションを見つけてください。すると例えば次のようにクレートが並んでいるかと思います。
 
-```
+```toml
 [dependencies]
 # AtCoder 2019年言語アップデート以降に使用できるクレート
 
@@ -164,20 +164,20 @@ ordered-float = "=1.0.2"
 
 `jemallocator`系を削除しようと考えている場合は、テストが別のファイルに分かれているため、もう少しだけ追加の手順が必要です。まずは`Cargo.toml`から下記の記述を削除します。
 
-```
+```toml
 [features]
 jemalloc = ["jemalloc-ctl", "jemallocator"]
 default = ["jemalloc"]
 ```
 
-```
+```toml
 # 代替ヒープアロケータ。条件によってはシステムアロケータより速いことも
 [target.'cfg(not(windows))'.dependencies]
 jemallocator = { version = "=0.3.2", optional = true }
 jemalloc-ctl = { version = "=0.3.3", optional = true }
 ```
 
-```
+```toml
 [[test]]
 name = "jemallocator"
 path = "tests/test_jemallocator.rs"
