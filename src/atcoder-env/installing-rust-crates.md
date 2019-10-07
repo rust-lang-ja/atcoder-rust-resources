@@ -135,6 +135,60 @@ root
 [rust-base-branch]: https://github.com/rust-lang-ja/atcoder-rust-base/tree/ja-all-enabled
 
 
+## クレートを削除する
+
+検討の結果、一部のクレートは残念ながら導入すべきでないクレートだと判断されることもあるかと思います。そういった場合は[GitHub Issue][gh-issue]を通してご連絡頂ければ当該クレートとそれに関連するテストの削除等の対応をさせていただきますが、一応、その方法も説明しておこうと思います。
+
+例えば、競プロ入出力補助の`proconio`が相応しくないので削除したいとなったとします。まずはこのクレートを依存から削除する必要があります。`git clone`したディレクトリ内の`Cargo.toml`ファイルを開き、`[dependencies]`セクションを見つけてください。すると例えば次のようにクレートが並んでいるかと思います。
+
+```
+[dependencies]
+# AtCoder 2019年言語アップデート以降に使用できるクレート
+
+# 競技プログラミングの入出力サポート
+proconio = { version = "=0.3.4", features = ["derive"] }
+
+# f64のOrd/Eq実装
+ordered-float = "=1.0.2"
+
+(...以下略...)
+```
+
+クレートによってオプションが付せられていることもありますが、`{削除したいクレート名} = ...`となっている行をコメントアウトまたは削除してください。
+
+続いてテストを削除します。`src/main.rs`ファイルを開くと、ずらっとテスト関数が並んでいます。これらの関数から`run_{削除したいクレート名}`と`test_{削除したいクレート名}`という関数を丸ごと削除してください。`test_{削除したいクレート名}`関数は、その前の行に`#[test]`アトリビュートがついているかと思いますので、それごと削除してください。
+
+そして`main()`関数内にある`run_{削除したいクレート名}`関数を呼び出す文を削除してください。
+
+基本的にはこれで削除は完了です。この後クレートのテストを行いますが、ここで`unresolved import`系のエラーが出るようなら適宜削除してください。
+
+`jemallocator`系を削除しようと考えている場合は、テストが別のファイルに分かれているため、もう少しだけ追加の手順が必要です。まずは`Cargo.toml`から下記の記述を削除します。
+
+```
+[features]
+jemalloc = ["jemalloc-ctl", "jemallocator"]
+default = ["jemalloc"]
+```
+
+```
+# 代替ヒープアロケータ。条件によってはシステムアロケータより速いことも
+[target.'cfg(not(windows))'.dependencies]
+jemallocator = { version = "=0.3.2", optional = true }
+jemalloc-ctl = { version = "=0.3.3", optional = true }
+```
+
+```
+[[test]]
+name = "jemallocator"
+path = "tests/test_jemallocator.rs"
+required-features = ["jemalloc"]
+```
+
+続けて`tests/test_jemallocator.rs`というファイルをファイルごと削除してください。
+
+[gh-issue]: https://github.com/rust-lang-ja/atcoder-rust-resources/issues
+
+
 ## クレートのテスト
 
 一度、導入したクレートが正しく動作するのかを確認しましょう。
