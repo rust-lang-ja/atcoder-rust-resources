@@ -745,7 +745,8 @@ ordered-float = &quot;=1.0.2&quot;
 <p>続いてテストを削除します。<code>src/main.rs</code>ファイルを開くと、ずらっとテスト関数が並んでいます。これらの関数から<code>run_{削除したいクレート名}</code>と<code>test_{削除したいクレート名}</code>という関数を丸ごと削除してください。<code>test_{削除したいクレート名}</code>関数は、その前の行に<code>#[test]</code>アトリビュートがついているかと思いますので、それごと削除してください。</p>
 <p>そして<code>main()</code>関数内にある<code>run_{削除したいクレート名}</code>関数を呼び出す文を削除してください。</p>
 <p>基本的にはこれで削除は完了です。この後クレートのテストを行いますが、ここで<code>unresolved import</code>系のエラーが出るようなら適宜削除してください。</p>
-<p><code>jemallocator</code>系を削除しようと考えている場合は、テストが別のファイルに分かれているため、もう少しだけ追加の手順が必要です。まずは<code>Cargo.toml</code>から下記の記述を削除します。</p>
+<p>削除するべきコードが無い場合、テストが別のファイルに分かれている場合があります。例えば<code>jemallocator</code>系を削除したいならば<code>tests/test_jemallocator.rs</code>というファイルを削除してください。</p>
+<p>また<code>jemallocator</code>系を削除する場合、<code>Cargo.toml</code>内の以下の部分も削除してください。</p>
 <pre><code class="language-toml">[features]
 jemalloc = [&quot;jemalloc-ctl&quot;, &quot;jemallocator&quot;]
 default = [&quot;jemalloc&quot;]
@@ -760,10 +761,9 @@ name = &quot;jemallocator&quot;
 path = &quot;tests/test_jemallocator.rs&quot;
 required-features = [&quot;jemalloc&quot;]
 </code></pre>
-<p>続けて<code>tests/test_jemallocator.rs</code>というファイルをファイルごと削除してください。</p>
 <h2><a class="header" href="#クレートのテスト" id="クレートのテスト">クレートのテスト</a></h2>
 <p>一度、導入したクレートが正しく動作するのかを確認しましょう。</p>
-<p>テストコードは<code>$RUST_HOME/lib/src/main.rs</code>にあります。実際に導入したクレートに応じて適宜テストをコメントアウトしてください。テストの実行には、<code>cargo test</code>コマンドを入力します。</p>
+<p>テストコードは<code>$RUST_HOME/lib/src/</code>及び<code>$RUST_HOME/lib/tests</code>にあります。先に述べたように使わないクレートに関わるコードは削除してください。実行するには、<code>cargo test</code>コマンドを入力します。</p>
 <pre><code class="language-console"># cd $RUST_HOME/lib
 $ cargo test --release
    Compiling atcoder-rust-base v0.1.0 (...)
@@ -788,6 +788,60 @@ test test_superslice ... ok
 test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 </code></pre>
 <p>多少表示されるテストの個数は異なるかもしれませんが、一番下の行が<code>test result: ok.</code>で<code>0 failed;</code>となっていれば問題ありません。</p>
+<p>また今回、使用するクレート自体のテストを実行するためのツール、<code>dep-tests</code>を作成しました。<code>dep-tests</code>はcargo commandのエイリアスとして、<code>cargo dep-tests</code>で起動できます。ただし<code>alias</code>は任意のスクリプトを実行できないのでcwdが<code>$RUST_HOME/lib</code>である必要があります。</p>
+<p>参考: <a href="https://qiita.com/ubnt_intrepid/items/9600fd734e6d116bc9cb">cargo で npm-scripts 的なことをする</a></p>
+<pre><code class="language-toml">[alias]
+dep-tests = [&quot;run&quot;, &quot;--manifest-path&quot;, &quot;./dep-tests/Cargo.toml&quot;, &quot;--&quot;]
+</code></pre>
+<pre><code class="language-console">$ cargo dep-tests --help
+    Finished dev [unoptimized + debuginfo] target(s) in 0.06s
+     Running `dep-tests/target/debug/dep-tests --help`
+dep-tests 0.0.0
+Run all of the tests in the dependency graph.
+
+USAGE:
+    dep-tests [FLAGS] [OPTIONS] &lt;dir&gt;
+
+FLAGS:
+        --all-features           Activate all available features
+        --no-default-features    Do not activate the `default` feature
+        --frozen                 Require Cargo.lock and cache are up to date
+        --locked                 Require Cargo.lock is up to date
+        --offline                Run without accessing the network
+    -h, --help                   Prints help information
+    -V, --version                Prints version information
+
+OPTIONS:
+    -p, --package &lt;SPEC&gt;...         **Dependency** to run test for
+        --features &lt;FEATURES&gt;...    Space-separated list of features to activate
+        --color &lt;WHEN&gt;              Coloring: auto, always, never
+    -d, --depth &lt;N&gt;                 How deep in the dependency chain to search
+        --skip &lt;N&gt;                  Skips the first N packages
+
+ARGS:
+    &lt;dir&gt;    Directory to run tests [default: /tmp/atcoder-rust-base-dep-tests]
+</code></pre>
+<pre><code class="language-console">$ cargo dep-tests --all-features -d 1
+</code></pre>
+<p>テストを中断した場合、<code>--skip &lt;N&gt;</code>を指定することで途中から再開できます。テスト対象のクレートは<code>(name, version, source)</code>でソートされているので並び方は一定です。</p>
+<p>またいくつかのクレートは<code>dep-tests</code>で動かないのでテストしないように除外されています。そのリストと理由は<code>$RUST_HOME/lib/dep-tests.toml</code>に記述されています。</p>
+<p><code>dep-tests</code>の具体的な動作の説明をしておきます。</p>
+<ol>
+<li>現在のdependency graph上の<code>atcoder-rust-base</code>から<a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies">現在のプラットフォームに適合する</a>、<a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies">normal-dependency</a>のみで繋がれた部分グラフを求める。そしてそこから<code>atcoder-rust-base</code>を除いたクレートを得る。またコマンドラインオプションで<code>-d</code>, <code>--depth</code>が指定されている場合さらにそのうちの一部に絞る。<code>-d 1</code>を指定したならば<code>Cargo.toml</code>の<code>[dependencies]</code>にあるものだけになる。</li>
+<li>コマンドラインオプションの<code>&lt;dir&gt;</code>で指定された場所にそのクレート達のためのワークスペースをN個、以下の手順で作成する。
+<ol>
+<li><code>$CARGO_HOME/registory/src</code>に展開されている<code>.crate</code>ファイルの中身をコピーする。</li>
+<li><code>Cargo.lock</code>を<code>atcoder-rust-base</code>のもので上書きする。これで<strong>大体は</strong>元のバージョン, featuresが再現できる。</li>
+</ol>
+</li>
+<li>N個のワークスペース上でテストを実行する。この際current workspace member (i.e. 元のdependencyの一つ)のみ元のfeaturesを再現する。</li>
+</ol>
+<p>N個のワークスペースに分割する理由は<code>atcoder-rust-base</code>の依存関係を<strong>可能な限り</strong>そのままで利用するためです。</p>
+<p>実は<code>cargo</code>にはdependency graph上にあるクレートのテストをそのまま実行する機能があるのですがそれには致命的な制限があり、<a href="https://github.com/rust-lang/cargo/blob/0.40.0/src/cargo/ops/cargo_compile.rs#L346-L355"><code>[dev-dependencies]</code>が一つでもあると問答無用で</a>拒否されます。</p>
+<pre><code class="language-console">$ cargo test -p regex
+error: package `regex` cannot be tested because it requires dev-dependencies and is not a member of the workspace
+</code></pre>
+<p>このエラーは<a href="https://github.com/rust-lang/cargo/pull/6192"><code>rust-lang/cargo#6192</code></a>で追加されました。このPRで言及されている通り、dev-dependencyがある場合<code>atcoder-rust-base</code>上には無い新たなクレートが必要になることがあります。そしてそれは既存のクレートのminor, patch versionの増加、オフになっていたfeatureの有効化を引き起こす可能性があります。N個のワークスペースに分割することで元の状態からの乖離を軽減しています。</p>
 <h2><a class="header" href="#クレートのコンパイル" id="クレートのコンパイル">クレートのコンパイル</a></h2>
 <p>クレートをコンパイルしましょう。
 以下のコマンドを実行します。</p>
