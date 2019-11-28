@@ -788,13 +788,16 @@ test test_superslice ... ok
 test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 </code></pre>
 <p>多少表示されるテストの個数は異なるかもしれませんが、一番下の行が<code>test result: ok.</code>で<code>0 failed;</code>となっていれば問題ありません。</p>
-<p>また今回、使用するクレート自体のテストを実行するためのツール、<code>dep-tests</code>を作成しました。<code>dep-tests</code>はcargo commandのエイリアスとして、<code>cargo dep-tests</code>で起動できます。ただし<code>alias</code>は任意のスクリプトを実行できないのでcwdが<code>$RUST_HOME/lib</code>である必要があります。</p>
+<p>また今回、使用するクレート自体のテストを実行するためのツール、<code>dep-tests</code>を作成しました。
+<code>dep-tests</code>はcargo commandのエイリアスとして、<code>cargo dep-tests</code>で起動できます。
+ただし<code>alias</code>は任意のスクリプトを実行できないのでcwdが<code>$RUST_HOME/lib</code>である必要があります。
+以下、cwdを<code>$RUST_HOME/lib</code>とします。</p>
 <p>参考: <a href="https://qiita.com/ubnt_intrepid/items/9600fd734e6d116bc9cb">cargo で npm-scripts 的なことをする</a></p>
 <pre><code class="language-toml">[alias]
 dep-tests = [&quot;run&quot;, &quot;--manifest-path&quot;, &quot;./dep-tests/Cargo.toml&quot;, &quot;--&quot;]
 </code></pre>
 <pre><code class="language-console">$ cargo dep-tests --help
-    Finished dev [unoptimized + debuginfo] target(s) in 0.06s
+    Finished dev [unoptimized + debuginfo] target(s) in 0.07s
      Running `dep-tests/target/debug/dep-tests --help`
 dep-tests 0.0.0
 Run all of the tests in the dependency graph.
@@ -812,36 +815,77 @@ FLAGS:
     -V, --version                Prints version information
 
 OPTIONS:
-    -p, --package &lt;SPEC&gt;...         **Dependency** to run test for
+    -p, --package &lt;SPEC&gt;...         Package to run test for
         --features &lt;FEATURES&gt;...    Space-separated list of features to activate
         --color &lt;WHEN&gt;              Coloring: auto, always, never
     -d, --depth &lt;N&gt;                 How deep in the dependency chain to search
-        --skip &lt;N&gt;                  Skips the first N packages
 
 ARGS:
     &lt;dir&gt;    Directory to run tests [default: /tmp/atcoder-rust-base-dep-tests]
 </code></pre>
 <pre><code class="language-console">$ cargo dep-tests --all-features -d 1
 </code></pre>
-<p>テストを中断した場合、<code>--skip &lt;N&gt;</code>を指定することで途中から再開できます。テスト対象のクレートは<code>(name, version, source)</code>でソートされているので並び方は一定です。</p>
-<p>またいくつかのクレートは<code>dep-tests</code>で動かないのでテストしないように除外されています。そのリストと理由は<code>$RUST_HOME/lib/dep-tests.toml</code>に記述されています。</p>
-<p><code>dep-tests</code>の具体的な動作の説明をしておきます。</p>
-<ol>
-<li>現在のdependency graph上の<code>atcoder-rust-base</code>から<a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies">現在のプラットフォームに適合する</a>、<a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies">normal-dependency</a>のみで繋がれた部分グラフを求める。そしてそこから<code>atcoder-rust-base</code>を除いたクレートを得る。またコマンドラインオプションで<code>-d</code>, <code>--depth</code>が指定されている場合さらにそのうちの一部に絞る。<code>-d 1</code>を指定したならば<code>Cargo.toml</code>の<code>[dependencies]</code>にあるものだけになる。</li>
-<li>コマンドラインオプションの<code>&lt;dir&gt;</code>で指定された場所にそのクレート達のためのワークスペースをN個、以下の手順で作成する。
-<ol>
-<li><code>$CARGO_HOME/registory/src</code>に展開されている<code>.crate</code>ファイルの中身をコピーする。</li>
-<li><code>Cargo.lock</code>を<code>atcoder-rust-base</code>のもので上書きする。これで<strong>大体は</strong>元のバージョン, featuresが再現できる。</li>
-</ol>
-</li>
-<li>N個のワークスペース上でテストを実行する。この際current workspace member (i.e. 元のdependencyの一つ)のみ元のfeaturesを再現する。</li>
-</ol>
-<p>N個のワークスペースに分割する理由は<code>atcoder-rust-base</code>の依存関係を<strong>可能な限り</strong>そのままで利用するためです。</p>
-<p>実は<code>cargo</code>にはdependency graph上にあるクレートのテストをそのまま実行する機能があるのですがそれには致命的な制限があり、<a href="https://github.com/rust-lang/cargo/blob/0.40.0/src/cargo/ops/cargo_compile.rs#L346-L355"><code>[dev-dependencies]</code>が一つでもあると問答無用で</a>拒否されます。</p>
+<p>いくつかのクレートは<code>dep-tests</code>で動かないのでテストしないように除外されています。
+そのリストと理由は<code>$RUST_HOME/lib/dep-tests.toml</code>に記述されています。</p>
+<p><code>dep-tests</code>の動作の説明をしておきます。</p>
+<p>実は<code>cargo</code>にはdependency graph上にあるクレートのテストをそのまま実行する機能があります。</p>
+<pre><code class="language-console">$ cargo test -p maplit -p num
+</code></pre>
+<p>しかしこれには致命的な欠点があり、<a href="https://github.com/rust-lang/cargo/blob/0.40.0/src/cargo/ops/cargo_compile.rs#L346-L355"><code>[dev-dependencies]</code>が一つでもあると問答無用で</a>拒否されます。</p>
 <pre><code class="language-console">$ cargo test -p regex
 error: package `regex` cannot be tested because it requires dev-dependencies and is not a member of the workspace
 </code></pre>
-<p>このエラーは<a href="https://github.com/rust-lang/cargo/pull/6192"><code>rust-lang/cargo#6192</code></a>で追加されました。このPRで言及されている通り、dev-dependencyがある場合<code>atcoder-rust-base</code>上には無い新たなクレートが必要になることがあります。そしてそれは既存のクレートのminor, patch versionの増加、オフになっていたfeatureの有効化を引き起こす可能性があります。N個のワークスペースに分割することで元の状態からの乖離を軽減しています。</p>
+<p>このエラーは<a href="https://github.com/rust-lang/cargo/pull/6192"><code>rust-lang/cargo#6192</code></a>で追加されました。
+禁止されている理由はこのPRで言及されている通り、dev-dependencyがある場合ワースクペース上には無い新たなクレートが必要になることがあるためです。
+<code>dep-tests</code>は『拡張』したワークスペースを新たに作成してその上でテストを実行します。</p>
+<p>例えば<code>itertools v0.8.1</code>, <code>regex v1.3.1</code>を対象にした場合、以下のような<code>Cargo.toml</code>が生成されます。</p>
+<pre><code class="language-toml">[package]
+name = &quot;atcoder-rust-base-dep-tests&quot;
+version = &quot;0.0.0&quot;
+edition = &quot;2018&quot;
+publish = false
+
+[workspace]
+members = [&quot;./itertools-0.8.1&quot;, &quot;./regex-1.3.1&quot;]
+
+[patch.crates-io]
+itertools = {path = &quot;./itertools-0.8.1&quot;}
+regex = {path = &quot;./regex-1.3.1&quot;}
+
+[dependencies]
+_0 = {package = &quot;aho-corasick&quot;,version = &quot;=0.7.6&quot;,default-features = false,features = [&quot;default&quot;, &quot;std&quot;]}
+_1 = {package = &quot;alga&quot;,version = &quot;=0.9.2&quot;,default-features = false,features = [&quot;default&quot;, &quot;std&quot;]}
+# 略
+_25 = {package = &quot;itertools&quot;,path = &quot;./itertools-0.8.1&quot;,default-features = false,features = [&quot;default&quot;, &quot;use_std&quot;]}
+# 略
+_84 = {package = &quot;regex&quot;,path = &quot;./regex-1.3.1&quot;,default-features = false,features = [&quot;aho-corasick&quot;, &quot;default&quot;, &quot;memchr&quot;, &quot;perf&quot;, &quot;perf-cache&quot;, &quot;perf-dfa&quot;, &quot;perf-inline&quot;, &quot;perf-literal&quot;, &quot;std&quot;, &quot;thread_local&quot;, &quot;unicode&quot;, &quot;unicode-age&quot;, &quot;unicode-bool&quot;, &quot;unicode-case&quot;, &quot;unicode-gencat&quot;, &quot;unicode-perl&quot;, &quot;unicode-script&quot;, &quot;unicode-segment&quot;]}
+# 略
+_107 = {package = &quot;version_check&quot;,version = &quot;=0.9.1&quot;,default-features = false,features = []}
+_108 = {package = &quot;whiteread&quot;,version = &quot;=0.4.4&quot;,default-features = false,features = []}
+</code></pre>
+<p>具体的な動作は以下の通りです。</p>
+<ol>
+<li>現在のdependency graph上の<code>atcoder-rust-base</code>から<a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies">現在のプラットフォームに適合する</a>、<a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies">normal-dependency</a>のみで繋がれた部分グラフを求める。
+そしてその節点から<code>atcoder-rust-base</code>を除いたクレートを得る。
+またコマンドラインオプションで<code>-d</code>, <code>--depth</code>が指定されている場合さらにそのうちの一部に絞る。
+<code>-d 1</code>を指定したならば<code>Cargo.toml</code>の<code>[dependencies]</code>にあるものだけになる。</li>
+<li>コマンドラインオプションの<code>&lt;dir&gt;</code>で指定された場所に1.のうちdev-dependencyを含むもののためのワークスペースを一つ、以下の手順で作成する。
+<ul>
+<li>対象のクレートについて、<code>$CARGO_HOME/registory/src</code>に展開されている<code>.crate</code>ファイルの中身をコピーする。</li>
+<li>このコピーしたクレートをworkspace membersとして<code>Cargo.toml</code>を作成する。
+このときダミーの<code>dependencies</code>として元のnormal-dependencyとdev-dependencyをバージョンとフィーチャを指定する。</li>
+<li><code>Cargo.lock</code>を<code>atcoder-rust-base</code>のもので上書きする。これで大体は元のバージョンが再現できる。</li>
+</ul>
+</li>
+<li>1.のうちdev-dependencyを含まないものは<code>atcoder-rust-base</code>上で直接テストを実行する。</li>
+<li>2.で作ったワークスペース上でテストを実行する。</li>
+</ol>
+<p>ワークスペースを一つにまとめることには以下の問題があり、ワークスペースを分割することで軽減できそうですがどうせ厳密なバージョン, フィーチャの保存は無理だしビルド時間と消費するディスク容量を激増させてまで分割するべきではない、と考えたため一つにまとめてしまいました。</p>
+<ol>
+<li>同一の名前のpackageはworkspace memberとしては共存できない</li>
+<li>既存のpackageのminor, patch versionの増加</li>
+<li>オフになっていたフィーチャの有効化</li>
+</ol>
 <h2><a class="header" href="#クレートのコンパイル" id="クレートのコンパイル">クレートのコンパイル</a></h2>
 <p>クレートをコンパイルしましょう。
 以下のコマンドを実行します。</p>
