@@ -222,7 +222,10 @@ test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
 多少表示されるテストの個数は異なるかもしれませんが、一番下の行が`test result: ok.`で`0 failed;`となっていれば問題ありません。
 
-また今回、使用するクレート自体のテストを実行するためのツール、`dep-tests`を作成しました。`dep-tests`はcargo commandのエイリアスとして、`cargo dep-tests`で起動できます。ただし`alias`は任意のスクリプトを実行できないのでcwdが`$RUST_HOME/lib`である必要があります。
+また今回、使用するクレート自体のテストを実行するためのツール、`dep-tests`を作成しました。
+`dep-tests`はcargo commandのエイリアスとして、`cargo dep-tests`で起動できます。
+ただし`alias`は任意のスクリプトを実行できないのでcwdが`$RUST_HOME/lib`である必要があります。
+以下、cwdを`$RUST_HOME/lib`とします。
 
 参考: [cargo で npm-scripts 的なことをする][qiita-article]
 
@@ -233,7 +236,7 @@ dep-tests = ["run", "--manifest-path", "./dep-tests/Cargo.toml", "--"]
 
 ```console
 $ cargo dep-tests --help
-    Finished dev [unoptimized + debuginfo] target(s) in 0.06s
+    Finished dev [unoptimized + debuginfo] target(s) in 0.07s
      Running `dep-tests/target/debug/dep-tests --help`
 dep-tests 0.0.0
 Run all of the tests in the dependency graph.
@@ -251,11 +254,10 @@ FLAGS:
     -V, --version                Prints version information
 
 OPTIONS:
-    -p, --package <SPEC>...         **Dependency** to run test for
+    -p, --package <SPEC>...         Package to run test for
         --features <FEATURES>...    Space-separated list of features to activate
         --color <WHEN>              Coloring: auto, always, never
     -d, --depth <N>                 How deep in the dependency chain to search
-        --skip <N>                  Skips the first N packages
 
 ARGS:
     <dir>    Directory to run tests [default: /tmp/atcoder-rust-base-dep-tests]
@@ -265,34 +267,81 @@ ARGS:
 $ cargo dep-tests --all-features -d 1
 ```
 
-テストを中断した場合、`--skip <N>`を指定することで途中から再開できます。テスト対象のクレートは`(name, version, source)`でソートされているので並び方は一定です。
+いくつかのクレートは`dep-tests`で動かないのでテストしないように除外されています。
+そのリストと理由は`$RUST_HOME/lib/dep-tests.toml`に記述されています。
 
-またいくつかのクレートは`dep-tests`で動かないのでテストしないように除外されています。そのリストと理由は`$RUST_HOME/lib/dep-tests.toml`に記述されています。
+`dep-tests`の動作の説明をしておきます。
 
-`dep-tests`の具体的な動作の説明をしておきます。
+実は`cargo`にはdependency graph上にあるクレートのテストをそのまま実行する機能があります。
 
-1. 現在のdependency graph上の`atcoder-rust-base`から[現在のプラットフォームに適合する][the-cargo-book-platform-specific-dependencies]、[normal-dependency][the-cargo-book-specifying-dependencies]のみで繋がれた部分グラフを求める。そしてそこから`atcoder-rust-base`を除いたクレートを得る。またコマンドラインオプションで`-d`, `--depth`が指定されている場合さらにそのうちの一部に絞る。`-d 1`を指定したならば`Cargo.toml`の`[dependencies]`にあるものだけになる。
-2. コマンドラインオプションの`<dir>`で指定された場所にそのクレート達のためのワークスペースをN個、以下の手順で作成する。
-    1. `$CARGO_HOME/registory/src`に展開されている`.crate`ファイルの中身をコピーする。
-    2. `Cargo.lock`を`atcoder-rust-base`のもので上書きする。これで**大体は**元のバージョン, featuresが再現できる。
-3. N個のワークスペース上でテストを実行する。この際current workspace member (i.e. 元のdependencyの一つ)のみ元のfeaturesを再現する。
+```console
+$ cargo test -p maplit -p num
+```
 
-N個のワークスペースに分割する理由は`atcoder-rust-base`の依存関係を**可能な限り**そのままで利用するためです。
-
-実は`cargo`にはdependency graph上にあるクレートのテストをそのまま実行する機能があるのですがそれには致命的な制限があり、[`[dev-dependencies]`が一つでもあると問答無用で][cargo-error]拒否されます。
+しかしこれには致命的な欠点があり、[`[dev-dependencies]`が一つでもあると問答無用で][cargo-error]拒否されます。
 
 ```console
 $ cargo test -p regex
 error: package `regex` cannot be tested because it requires dev-dependencies and is not a member of the workspace
 ```
 
-このエラーは[`rust-lang/cargo#6192`][rust-lang-cargo-pull-6192]で追加されました。このPRで言及されている通り、dev-dependencyがある場合`atcoder-rust-base`上には無い新たなクレートが必要になることがあります。そしてそれは既存のクレートのminor, patch versionの増加、オフになっていたfeatureの有効化を引き起こす可能性があります。N個のワークスペースに分割することで元の状態からの乖離を軽減しています。
+このエラーは[`rust-lang/cargo#6192`][rust-lang-cargo-pull-6192]で追加されました。
+禁止されている理由はこのPRで言及されている通り、dev-dependencyがある場合ワースクペース上には無い新たなクレートが必要になることがあるためです。
+`dep-tests`は『拡張』したワークスペースを新たに作成してその上でテストを実行します。
+
+例えば`itertools v0.8.1`, `regex v1.3.1`を対象にした場合、以下のような`Cargo.toml`が生成されます。
+
+```toml
+[package]
+name = "atcoder-rust-base-dep-tests"
+version = "0.0.0"
+edition = "2018"
+publish = false
+
+[workspace]
+members = ["./itertools-0.8.1", "./regex-1.3.1"]
+
+[patch.crates-io]
+itertools = {path = "./itertools-0.8.1"}
+regex = {path = "./regex-1.3.1"}
+
+[dependencies]
+_0 = {package = "aho-corasick",version = "=0.7.6",default-features = false,features = ["default", "std"]}
+_1 = {package = "alga",version = "=0.9.2",default-features = false,features = ["default", "std"]}
+# 略
+_25 = {package = "itertools",path = "./itertools-0.8.1",default-features = false,features = ["default", "use_std"]}
+# 略
+_84 = {package = "regex",path = "./regex-1.3.1",default-features = false,features = ["aho-corasick", "default", "memchr", "perf", "perf-cache", "perf-dfa", "perf-inline", "perf-literal", "std", "thread_local", "unicode", "unicode-age", "unicode-bool", "unicode-case", "unicode-gencat", "unicode-perl", "unicode-script", "unicode-segment"]}
+# 略
+_107 = {package = "version_check",version = "=0.9.1",default-features = false,features = []}
+_108 = {package = "whiteread",version = "=0.4.4",default-features = false,features = []}
+```
+
+具体的な動作は以下の通りです。
+
+1. 現在のdependency graph上の`atcoder-rust-base`から[現在のプラットフォームに適合する][the-cargo-book-platform-specific-dependencies]、[normal-dependency][the-cargo-book-specifying-dependencies]のみで繋がれた部分グラフを求める。
+   そしてその節点から`atcoder-rust-base`を除いたクレートを得る。
+   またコマンドラインオプションで`-d`, `--depth`が指定されている場合さらにそのうちの一部に絞る。
+   `-d 1`を指定したならば`Cargo.toml`の`[dependencies]`にあるものだけになる。
+2. コマンドラインオプションの`<dir>`で指定された場所に1.のうちdev-dependencyを含むもののためのワークスペースを一つ、以下の手順で作成する。
+    - 対象のクレートについて、`$CARGO_HOME/registory/src`に展開されている`.crate`ファイルの中身をコピーする。
+    - このコピーしたクレートをworkspace membersとして`Cargo.toml`を作成する。
+      このときダミーの`dependencies`として元のnormal-dependencyとdev-dependencyをバージョンとフィーチャを指定する。
+    - `Cargo.lock`を`atcoder-rust-base`のもので上書きする。これで大体は元のバージョンが再現できる。
+3. 1.のうちdev-dependencyを含まないものは`atcoder-rust-base`上で直接テストを実行する。
+4. 2.で作ったワークスペース上でテストを実行する。
+
+ワークスペースを一つにまとめることには以下の問題があり、ワークスペースを分割することで軽減できそうですがどうせ厳密なバージョン, フィーチャの保存は無理だしビルド時間と消費するディスク容量を激増させてまで分割するべきではない、と考えたため一つにまとめてしまいました。
+
+1. 同一の名前のpackageはworkspace memberとしては共存できない
+2. 既存のpackageのminor, patch versionの増加
+3. オフになっていたフィーチャの有効化
 
 [qiita-article]:                                 https://qiita.com/ubnt_intrepid/items/9600fd734e6d116bc9cb
 [cargo-error]:                                   https://github.com/rust-lang/cargo/blob/0.40.0/src/cargo/ops/cargo_compile.rs#L346-L355
+[rust-lang-cargo-pull-6192]:                     https://github.com/rust-lang/cargo/pull/6192
 [the-cargo-book-platform-specific-dependencies]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies
 [the-cargo-book-specifying-dependencies]:        https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies
-[rust-lang-cargo-pull-6192]:                     https://github.com/rust-lang/cargo/pull/6192
 
 ## クレートのコンパイル
 
