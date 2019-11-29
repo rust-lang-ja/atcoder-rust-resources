@@ -106,13 +106,9 @@ $ cp -p $RUST_LIB/tests/test_jemallocator.rs .
 
 ## サンプルコードをコンパイル、リンクする
 
-$ rustc --edition=2018 -C opt-level=3 \
-    $(rustc-dep-option-generator $RUST_LIB/Cargo.toml $RUST_LIB/target/release/deps) \
-    main.rs
+$ rustc --edition=2018 -C opt-level=3 $(rustc-dep-option-generator) main.rs
 
-$ rustc --edition=2018 -C opt-level=3 \
-    $(rustc-dep-option-generator $RUST_LIB/Cargo.toml $RUST_LIB/target/release/deps) \
-    test_jemallocator.rs
+$ rustc --edition=2018 -C opt-level=3 $(rustc-dep-option-generator) test_jemallocator.rs
 ```
 
 コンパイルとリンクに成功すると実行ファイルが作られます。
