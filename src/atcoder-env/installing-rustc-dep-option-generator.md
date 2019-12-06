@@ -82,18 +82,16 @@ OPTIONS:
 
 $ RUST_LIB=${RUST_HOME}/lib
 $ rustc-dep-option-generator
+--extern aho_corasick=/usr/local/lib/rust/lib/target/release/deps/libaho_corasick-aa47a24abbe125fb.rlib
+--extern alga=/usr/local/lib/rust/lib/target/release/deps/libalga-8879e1bae3df17da.rlib
 ...（中略）...
-       Fresh atcoder-rust-base v0.1.0 (/usr/local/rust/lib)
-    Finished release [optimized] target(s) in 0.06s
---extern arrayvec=/usr/local/lib/rust/lib/target/release/deps/libarrayvec-cc9c39e9e371e142.rlib
---extern hashbrown=/usr/local/lib/rust/lib/target/release/deps/libhashbrown-106405935e6124e3.rlib
-...（中略）...
+--extern jemallocator=/usr/local/lib/rust/lib/target/release/deps/libjemallocator-f83210f5bd62bec7.rlib
 -L dependency=/usr/local/lib/rust/lib/target/release/deps
 
 ## ↑ errorの文字が表示されなければOK
 ##
 ## エラーの例
-## error: failed to find appropriate path for /arrayvec-0.4.10/
+## error: failed to find appropriate path for aho-corasick
 
 $ echo $?
 0   # 0ならOK
