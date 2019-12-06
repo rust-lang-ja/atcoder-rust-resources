@@ -915,8 +915,7 @@ $
 <pre><code class="language-console">$ sudo apt update
 $ sudo apt install -y libssl-dev
 </code></pre>
-<p>なお<code>libssl-dev</code>はツールが依存しているクレートの1つが要求しているためにインストールしますが、このツールではその機能は使いません。
-ツール実行時のネットワーク・アクセスは不要です。</p>
+<p>なお<code>libssl-dev</code>は<code>rustc-dep-option-generator</code>が<code>cargo</code>をライブラリとして用いているために必要ですが、このツールではその機能は使いません。ツール実行時のネットワーク・アクセスは不要です。</p>
 <h2><a class="header" href="#ツールのインストール" id="ツールのインストール">ツールのインストール</a></h2>
 <p><code>cargo install</code>コマンドでインストールします。
 以下のコマンドを実行すると、GitHubのリポジトリからツールのソースコードがダウンロードされ、ビルドが実行されます。
@@ -931,13 +930,13 @@ root
 <p>インストールの成功時は以下のように表示されます。</p>
 <pre><code class="language-console"># cargo install --git https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git
     Updating git repository `https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git`
-  Installing rustc-dep-option-generator v0.1.0 (https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git#...)
+  Installing rustc-dep-option-generator v0.2.0 (https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git#...)
     Updating crates.io index
   Downloaded failure v0.1.5
    ...（中略）...
 
    Compiling cargo v0.35.0
-   Compiling rustc-dep-option-generator v0.1.0 (https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git#...)
+   Compiling rustc-dep-option-generator v0.2.0 (https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git#...)
     Finished release [optimized] target(s) in 4m 28s
   Installing /usr/local/lib/rust/cargo/bin/rustc-dep-option-generator
 </code></pre>
@@ -951,17 +950,34 @@ $ which rustc-dep-option-generator
 $ echo $RUST_HOME
 /usr/local/lib/rust
 
+$ rustc-dep-option-generator --help
+rustc-dep-option-generator 0.2.0
+rust-lang-ja Developers
+A program to generate Rust compiler options to locate prebuilt crates.
+
+USAGE:
+    rustc-dep-option-generator [OPTIONS]
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+OPTIONS:
+        --manifest-path &lt;PATH&gt;    Path to Cargo.toml
+        --format &lt;FORMAT&gt;         Output format [default: shell]  [possible values: shell, json]
+
 $ RUST_LIB=${RUST_HOME}/lib
-$ rustc-dep-option-generator ${RUST_LIB}/Cargo.toml ${RUST_LIB}/target/release/deps
---extern arrayvec=/usr/local/lib/rust/lib/target/release/deps/libarrayvec-cc9c39e9e371e142.rlib
---extern hashbrown=/usr/local/lib/rust/lib/target/release/deps/libhashbrown-106405935e6124e3.rlib
+$ rustc-dep-option-generator
+--extern aho_corasick=/usr/local/lib/rust/lib/target/release/deps/libaho_corasick-aa47a24abbe125fb.rlib
+--extern alga=/usr/local/lib/rust/lib/target/release/deps/libalga-8879e1bae3df17da.rlib
 ...（中略）...
+--extern jemallocator=/usr/local/lib/rust/lib/target/release/deps/libjemallocator-f83210f5bd62bec7.rlib
 -L dependency=/usr/local/lib/rust/lib/target/release/deps
 
-## ↑ Errorの文字が表示されなければOK
+## ↑ errorの文字が表示されなければOK
 ##
 ## エラーの例
-## Error: StringError(&quot;failed to find appropriate path for /arrayvec-0.4.10/&quot;)
+## error: failed to find appropriate path for aho-corasick
 
 $ echo $?
 0   # 0ならOK
@@ -1052,13 +1068,9 @@ $ cp -p $RUST_LIB/tests/test_jemallocator.rs .
 
 ## サンプルコードをコンパイル、リンクする
 
-$ rustc --edition=2018 -C opt-level=3 \
-    $(rustc-dep-option-generator $RUST_LIB/Cargo.toml $RUST_LIB/target/release/deps) \
-    main.rs
+$ rustc --edition=2018 -C opt-level=3 $(rustc-dep-option-generator) main.rs
 
-$ rustc --edition=2018 -C opt-level=3 \
-    $(rustc-dep-option-generator $RUST_LIB/Cargo.toml $RUST_LIB/target/release/deps) \
-    test_jemallocator.rs
+$ rustc --edition=2018 -C opt-level=3 $(rustc-dep-option-generator) test_jemallocator.rs
 </code></pre>
 <p>コンパイルとリンクに成功すると実行ファイルが作られます。</p>
 <pre><code class="language-console">$ file main
