@@ -17,9 +17,7 @@ $ sudo apt update
 $ sudo apt install -y libssl-dev
 ```
 
-なお`libssl-dev`はツールが依存しているクレートの1つが要求しているためにインストールしますが、このツールではその機能は使いません。
-ツール実行時のネットワーク・アクセスは不要です。
-
+なお`libssl-dev`は`rustc-dep-option-generator`が`cargo`をライブラリとして用いているために必要ですが、このツールではその機能は使いません。ツール実行時のネットワーク・アクセスは不要です。
 
 ## ツールのインストール
 
@@ -41,13 +39,13 @@ root
 ```console
 # cargo install --git https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git
     Updating git repository `https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git`
-  Installing rustc-dep-option-generator v0.1.0 (https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git#...)
+  Installing rustc-dep-option-generator v0.2.0 (https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git#...)
     Updating crates.io index
   Downloaded failure v0.1.5
    ...（中略）...
 
    Compiling cargo v0.35.0
-   Compiling rustc-dep-option-generator v0.1.0 (https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git#...)
+   Compiling rustc-dep-option-generator v0.2.0 (https://github.com/rust-lang-ja/atcoder-rustc-dep-option-generator.git#...)
     Finished release [optimized] target(s) in 4m 28s
   Installing /usr/local/lib/rust/cargo/bin/rustc-dep-option-generator
 ```
@@ -66,17 +64,34 @@ $ which rustc-dep-option-generator
 $ echo $RUST_HOME
 /usr/local/lib/rust
 
+$ rustc-dep-option-generator --help
+rustc-dep-option-generator 0.2.0
+rust-lang-ja Developers
+A program to generate Rust compiler options to locate prebuilt crates.
+
+USAGE:
+    rustc-dep-option-generator [OPTIONS]
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+OPTIONS:
+        --manifest-path <PATH>    Path to Cargo.toml
+        --format <FORMAT>         Output format [default: shell]  [possible values: shell, json]
+
 $ RUST_LIB=${RUST_HOME}/lib
-$ rustc-dep-option-generator ${RUST_LIB}/Cargo.toml ${RUST_LIB}/target/release/deps
---extern arrayvec=/usr/local/lib/rust/lib/target/release/deps/libarrayvec-cc9c39e9e371e142.rlib
---extern hashbrown=/usr/local/lib/rust/lib/target/release/deps/libhashbrown-106405935e6124e3.rlib
+$ rustc-dep-option-generator
+--extern aho_corasick=/usr/local/lib/rust/lib/target/release/deps/libaho_corasick-aa47a24abbe125fb.rlib
+--extern alga=/usr/local/lib/rust/lib/target/release/deps/libalga-8879e1bae3df17da.rlib
 ...（中略）...
+--extern jemallocator=/usr/local/lib/rust/lib/target/release/deps/libjemallocator-f83210f5bd62bec7.rlib
 -L dependency=/usr/local/lib/rust/lib/target/release/deps
 
-## ↑ Errorの文字が表示されなければOK
+## ↑ errorの文字が表示されなければOK
 ##
 ## エラーの例
-## Error: StringError("failed to find appropriate path for /arrayvec-0.4.10/")
+## error: failed to find appropriate path for aho-corasick
 
 $ echo $?
 0   # 0ならOK
