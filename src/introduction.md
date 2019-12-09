@@ -204,7 +204,7 @@ TODO: ゼロコスト抽象化（_zero-cost abstraction_）
       Rustにはいわゆる『オブジェクト指向言語』が持つ継承の仕組みはありませんが、その代わりに柔軟な列挙型とトレイトの仕組みを活用するのがRustの選択です。
       dynamic dispatchを行なう機会もそう多くはありません。
 - [パターンマッチング](https://doc.rust-lang.org/book/ch18-00-patterns.html#patterns-and-matching)
-    - Rust 1.26で[slice pattern](https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html)が追加されたり1.39で[`if`の制限の取り払われたり](https://github.com/rust-lang/rust/pull/63118/)して、ML系言語とかのそれに近づいてきました。
+    - パターンマッチングは、端的に言うとタプルや構造体・列挙型などを (構造に合わせて分岐しながら) 分解し、中身を取り出す機能です。特に先に触れた列挙型を扱うにあたっては、パターンマッチは非常に強力な機能です。最近でも少しずつ改善が行なわれており、 Rust 1.26で[slice pattern](https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html)が追加されたり1.39で[`if`の制限の取り払われたり](https://github.com/rust-lang/rust/pull/63118/)しました。これらの改善もあり、特にML系言語に馴染みのある方は近い感覚で扱えるのではないでしょうか。
 - [**衛生的**マクロ](https://doc.rust-lang.org/book/ch19-06-macros.html)
     - 構文木が壊れるのはもちろん、識別子が衝突する心配もありません。
       安全性を保ったままで色々なことを可能にします。
