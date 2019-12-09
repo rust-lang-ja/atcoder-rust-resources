@@ -255,7 +255,7 @@ fn main() {
     受け取った文字列を空白区切りにするためには`split_whitespace()`という関数を使いますが、これはイテレータを返します。その各要素を整数に変換するために`map()`と`parse()`関数を使いますが、変換先の型を指定するために`parse::<i32>()`などの書き方を使います。[`itertools`](https://crates.io/crates/itertools)を使えば[Pythonの`a, b = iter`のようにイテレータを直接分解するような書き方ができますが](https://docs.rs/itertools/0.8.2/itertools/trait.Itertools.html#method.next_tuple)、`std`だけだと一つずつ`next()`で要素を取り出してタプルを作る必要があります。
 - `std`を含む各ライブラリは大抵明示的なエラーハンドリングを要求する。
     - 何かの理由で標準入力が読み込めない状態になるかもしれません。整数ではない入力を整数にしようとするかもしれません。イテレータの要素が足りないかもしれません。こういったものをRustでは[`Option`](https://doc.rust-lang.org/stable/std/option/enum.Option.html)や[`Result`](https://doc.rust-lang.org/stable/std/result/enum.Result.html)で表現します。[`?`](https://doc.rust-lang.org/edition-guide/rust-2018/error-handling-and-panics/the-question-mark-operator-for-easier-error-handling.html)を使えば視認性を損ねることはない（むしろコードを俯瞰するときのの助けになる）ですが競技プログラミングでは`unwrap()`を使うことになるでしょう。これはエラーが起きたならパニック（i.e. `RE`） するという乱暴なものですが、入力の形式が決まっている以上エラーになるのは読み間違えたか書き間違えたときのみでしょう。
-    - ただ例外はいくつかあります。
+    - もちろん逆に、明示的なエラーハンドリングは要求しないかわりに失敗時は内部でパニックするような関数もあります。
       例えば[`Index`](https://doc.rust-lang.org/stable/std/ops/trait.Index.html)で境界外アクセスしたときやメモリが足りずにアロケーションに失敗したとき、[`println!`が失敗したとき](https://doc.rust-lang.org/std/macro.println.html#panics)にパニックします。
       このように『失敗するとパニックする』ものはその条件をドキュメントに`# Panics`という形で書いています。
 
