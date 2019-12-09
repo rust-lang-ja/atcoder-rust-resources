@@ -201,7 +201,7 @@ TODO: ゼロコスト抽象化（_zero-cost abstraction_）
       いくつかの制限がありますが、基本的に推論されて欲しいときにはきちんと推論してくれます。
 - [代数的データ構造](https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html)
     - Rustの列挙型（`enum`）は各バリアントにパラメータを持てます。
-      Rustにはいわゆる『オブジェクト指向言語』のような継承の仕組みを持ちませんが列挙型とトレイトにより不要です。
+      Rustにはいわゆる『オブジェクト指向言語』が持つ継承の仕組みはありませんが、その代わりに柔軟な列挙型とトレイトの仕組みを活用するのがRustの選択です。
       dynamic dispatchを行なう機会もそう多くはありません。
 - [パターンマッチング](https://doc.rust-lang.org/book/ch18-00-patterns.html#patterns-and-matching)
     - Rust 1.26で[slice pattern](https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html)が追加されたり1.39で[`if`の制限の取り払われたり](https://github.com/rust-lang/rust/pull/63118/)して、ML系言語とかのそれに近づいてきました。
