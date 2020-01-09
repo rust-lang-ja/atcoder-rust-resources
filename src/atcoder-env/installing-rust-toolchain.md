@@ -7,9 +7,9 @@
 
 ## Rustバージョン
 
-今回の言語アップデートでは2019年9月26日にリリースされた1.38.0をインストールします。
+今回の言語アップデートでは2019年11月7日にリリースされた1.39.0をインストールします。
 
-Rustの安定版（stable版）は6週間ごとにリリースされますので、次のバージョン1.39.0は11月7日にリリースされる予定です。ただ、安定性のためには世に出てからある程度の時間が経っているバージョンを選ぶ方が望ましいでしょう。もし言語アップデートの作業終了間際に1.39.0がリリースされたとしても、直後に即採用することは見送った方がよいと思われます。逆に言語アップデートの時期が11月下旬～12月頃になるようでしたら1.39は有力な選択肢です。
+Rustの安定版（stable版）は6週間ごとにリリースされますので、既にバージョン1.40.0が12月19日にリリースされています。ただ、安定性のためには世に出てからある程度の時間が経っているバージョンを選ぶ方が望ましいと考えられますので、ここでは1つ前のバージョンをインストールします。様子を見る期間については、現在のところはおよそ次期バージョンがリリースされるまでを1つの目安としています。
 
 ツールチェインのインストールには`rustup`というRustプロジェクト公式のコマンドラインツールを使います。
 これにより特定のバージョンのRustをインストールすることが可能になります。
@@ -58,7 +58,7 @@ $ sudo -i
 # whoami
 root
 
-# RUST_TOOLCHAIN=1.38.0
+# RUST_TOOLCHAIN=1.39.0
 # export RUST_HOME=/usr/local/lib/rust
 # export RUSTUP_HOME=${RUST_HOME}/rustup
 # export CARGO_HOME=${RUST_HOME}/cargo
@@ -75,14 +75,14 @@ root
 
 ```console
 info: downloading installer
-info: syncing channel updates for '1.38.0-x86_64-unknown-linux-gnu'
-info: latest update on 2019-09-26, rust version 1.38.0 (625451e37 2019-09-23)
+info: syncing channel updates for '1.39.0-x86_64-unknown-linux-gnu'
+info: latest update on 2019-11-07, rust version 1.39.0 (4560ea788 2019-11-04)
 info: downloading component 'rustc'
 info: downloading component 'rust-std'
 info: downloading component 'cargo'
 ...（中略）...
 
-  1.38.0 installed - rustc 1.38.0 (625451e37 2019-09-23)
+  1.39.0 installed - rustc 1.39.0 (4560ea788 2019-11-04)
 
 
 Rust is installed now. Great!
@@ -129,19 +129,19 @@ $ which rustc
 
 ## バージョンなどを確認
 $ rustc -V
-rustc 1.38.0 (625451e37 2019-09-23)
+rustc 1.39.0 (4560ea788 2019-11-04)
 
 $ cargo -V
-cargo 1.38.0 (23ef9a4ef 2019-08-20)
+cargo 1.39.0 (1c6ec66d5 2019-09-30)
 
 $ rustup -V
-rustup 1.19.0 (2af131cf9 2019-09-08)
+rustup 1.21.1 (7832b2ebe 2019-12-20)
 
 $ rustup show
 Default host: x86_64-unknown-linux-gnu
 
-1.38.0-x86_64-unknown-linux-gnu (default)
-rustc 1.38.0 (625451e37 2019-09-23)
+1.39.0-x86_64-unknown-linux-gnu (default)
+rustc 1.39.0 (4560ea788 2019-11-04)
 
 ## Rustプログラムのビルドと実行ができることを確認
 $ cd /tmp
