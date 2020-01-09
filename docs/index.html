@@ -177,8 +177,7 @@
 <h4><a class="header" href="#信頼性が高い" id="信頼性が高い">信頼性が高い</a></h4>
 <p>信頼性は、ここではRustの<a href="https://www.rust-lang.org/">公式トップページ</a>に倣いメモリ安全性、スレッド安全性、バグの起こしにくさであるとします。競技プログラミングで特に大事になってくるのはメモリ安全性とバグの起こしにくさです。</p>
 <blockquote>
-<h3><a class="header" href="#reliability" id="reliability"><strong>Reliability</strong></a></h3>
-<p>Rust’s rich type system and ownership model guarantee memory-safety and thread-safety — and enable you to eliminate many classes of bugs at compile-time.</p>
+<p><strong>Reliability</strong> Rust’s rich type system and ownership model guarantee memory-safety and thread-safety — and enable you to eliminate many classes of bugs at compile-time.</p>
 </blockquote>
 <p>これは様々なプログラミング言語が様々なアイデアで対処している部分です。たとえばメモリの確保と解放を正しく行うために、C++であればスマートポインタやコンテナを用意したり、他の言語ではガベージコレクタという実行時の機構を用意したりしています。RustでもC++のスマートポインタやコンテナと同様なものを用意し、自分でメモリの確保と解放を行わなくてよいようにできています。ガベージコレクタを利用すると確かに安全でメモリ管理に関してほとんど何も考えなくてよいものの、そのためにほとんどのデータをヒープに置いて参照経由で扱わなければならず、実行速度にも多少影響します。かといってC++のスマートポインタやコンテナは間違った使い方が簡単にできてしまいます。特にイテレータはコレクションに対する操作を行うための標準的なツールにもかかわらず実質的に単なるポインタと同様なので、しばしば無効なイテレータが発生します。例えば (少々意図的な例ですが) 次のように簡単に問題を起こせてしまいます。</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
@@ -231,7 +230,7 @@ stack backtrace:
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 </code></pre>
 <h4><a class="header" href="#多くの問題をコンパイル時に発見できる" id="多くの問題をコンパイル時に発見できる">多くの問題をコンパイル時に発見できる</a></h4>
-<p>RustはC/C++並みの速度を確保するため、実行時にやらなければいけないことをなるべく減らす方針の言語です。たとえば先ほど触れたように、多くの言語にあるガベージコレクタがありません。それだけならばC++と変わりないのですが、速度と安全性を両立させるためにRustではできるだけ多くのことをコンパイル時に確認する仕組みになっています。C++が受け入れてしまうような危険なコードもコンパイルエラーにします。</p>
+<p>RustはC/C++並みの速度を確保するため、実行時にやらなければいけないことをなるべく減らす方針の言語です。たとえば先ほど触れたように、多くの言語にあるガベージコレクタがありません。それだけならばC++と変わりありませんが、速度と安全性を両立させるためにRustではできるだけ多くのことをコンパイル時に確認する仕組みになっています。C++が受け入れてしまうような危険なコードもコンパイルエラーにします。</p>
 <p>それ以外にも、例えば整数型同士の暗黙の型変換がない (例え<code>u8</code>から<code>u32</code>であっても) こともある種のミスを防ぐのに役立ちます。たとえばC++で総和をとるために<code>accumulate()</code>関数を利用する際、気をつけなければオーバーフローしないはずのところでオーバーフローを起こしてしまいます (もし符号付き整数型であったなら未定義動作にもなってしまいます) 。</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 #include &lt;limits&gt;
@@ -302,86 +301,90 @@ fn main() {
 (以下略)
 </code></pre>
 <h4><a class="header" href="#抽象化のための機能を数多く備えている" id="抽象化のための機能を数多く備えている">抽象化のための機能を数多く備えている</a></h4>
-<p>Rustの言語デザインやライブラリは安全性と高速性を確保しながらその範囲で<strong>ゼロコスト抽象化</strong>（<em>zero-cost abstraction</em>）を追求しています。</p>
-<p>他の言語では『イテレータではなくfor文で書いた方が速い』、『async/awaitを使うと遅い』といったことは珍しくありません。
-その場合も最適化よりは抽象化の方に倒すことが多いでしょう。
-しかしボトルネックを高速化する必要があるという状況も出て来ます。
-そうなると一般的にコードの見た目は悪くなりますし手間もかかります。</p>
-<p>Rustでは抽象化とパフォーマンスを秤にかける機会は他の言語ほどは無いです。
-『コスト』は基本的に可視化されているのでそこをちょっと変えるだけです。</p>
-<p>また抽象化のために例えば次のような他のプログラミング言語に備わっている優れた機能を輸入しています。</p>
+<p>例えば次のようなさまざまな機能があります。Rustは後発の言語ですので、他のプログラミング言語に備わっている優れた機能も参考にして多数の機能が導入されています。</p>
 <ul>
 <li>
 <p>強力な型推論</p>
-<p>Hindley/Milnerをベース(TODO: ?)にした賢い型推論器を持ちます。
-いくつかの制限がありますが、基本的に推論されて欲しいときにはきちんと推論してくれます。</p>
+<p>型推論アルゴリズムとしては非常に有名なHindley/Milnerのアルゴリズムをベースにした賢い型推論器を持ちます。言語設計的に型推論を制限している箇所 (例: 関数の引数) や、型推論だけでは決定できず型を明示する必要があることもあります (例: <code>iter.collect::&lt;Result&lt;_, _&gt;&gt;()?</code>) 。それでもほとんどのケースでは推論され、型の明示は最低限で済みます。</p>
 </li>
 <li>
 <p><a href="https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html">代数的データ構造</a></p>
-<p>Rustの列挙型（<code>enum</code>）は各バリアントにパラメータを持てます。
-いわゆる直和型や代数的データ型と呼ばれるものです。</p>
+<p>Rustの列挙型 (<code>enum</code>)は各バリアントに値を持てます。いわゆる直和型や代数的データ型と呼ばれるものです。タグ付き共用体 (tagged union) と呼ばれることもあります。例えば一方向連結リストの構造は次のように表せます。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+enum List&lt;T&gt; {
+    /// 先頭要素とそれ以降の要素によるリストを持つ。
+    Cons(T, Box&lt;List&lt;T&gt;&gt;),
+
+    /// リストが空であることを示す。
+    Nil,
+}
+#}</code></pre></pre>
 </li>
 <li>
-<p><a href="https://doc.rust-lang.org/book/ch10-02-traits.html">型クラス</a></p>
-<p>Rustのトレイトは型クラスのように扱うことができます。（<a href="https://keens.github.io/slide/katakurasuwokoete/">参考</a>）
-JavaやC#の『インターフェイス』と呼ばれるものよりはるかに柔軟な実装ができます。</p>
-<p>Rustにはいわゆる『オブジェクト指向言語』が持つ継承の仕組みはありませんが、その代わりに柔軟な列挙型とトレイトの仕組みを活用するのがRustの選択です。
-継承をしたくなったときは以下の方法があります。
-大抵はこのうち1.と2.で事足ります。
-（<a href="https://twitter.com/i/web/status/928550702720233472">参考</a>）</p>
+<p><a href="https://doc.rust-lang.org/book/ch10-02-traits.html">トレイト</a></p>
+<p>JavaやC#のインターフェイスと似ていますが、より柔軟に利用することができます。Rustではいわゆる「オブジェクト指向言語」が持つ継承の仕組みをもたない代わりに強力な列挙型とトレイトの仕組みを活用します。例えば単純な継承関係であれば次のような方法で置き換えられます。多くの場合、1.と2.を用いれば十分対応できることでしょう (<a href="https://twitter.com/i/web/status/928550702720233472">参考</a>) 。</p>
 <ol>
 <li>
 <p>実装クラスが数個かつパラメータも多くはない</p>
-<p>列挙型（直和型）を使います。
-そもそもこのような場合直和型が適切である場合が多いです。
-実際KotlinやScalaではJVMの上で抽象クラスとそのサブクラスを直和型のように扱うためにsealed classという機能を供えています。</p>
+<p>列挙型 (直和型)を使います。
+むしろこのような場合は最初から継承よりも直和型が適切である場合が多いです。
+実際、KotlinやScalaではJVM上で抽象クラスとそのサブクラスを直和型のように扱うためにsealed classという機能を備えています。</p>
 </li>
 <li>
 <p>実装の共有</p>
 <p>トレイトのデフォルト実装を使います。
-フィールドはgetterメソッドで得ます。
-むしろこれにより各フィールドやメソッドの役割が明確になり無意味に複雑なコードが生まれにくくなります。</p>
-<p>ただgetterを書くときに『1つのオブジェクトに対する可変参照は高々1つしか存在できない』という原則がほんの少しだけ邪魔になるかもしれません。</p>
-</li>
-<li>
-<p>2.に加えインターフェイスごと雑に継承</p>
-<p><a href="https://doc.rust-lang.org/stable/std/?search=Deref"><code>Deref</code></a>と<a href="https://doc.rust-lang.org/stable/std/ops/trait.DerefMut.html"><code>DerefMut</code></a>で中のメソッドを直で呼べます。</p>
+フィールドの共通化は、代わりにgetterメソッドをトレイトに記述しておきます。
+むしろこれにより各フィールドやメソッドの役割が明確になり、無意味に複雑なコードが生まれにくくなります。</p>
+<p>ただし、getterを書く際に「1つのオブジェクトに対する可変参照は高々1つしか存在できない」という原則が障害となることがごく稀にあります。</p>
 </li>
 <li>
 <p>特定のメソッドだけ必要</p>
-<p>trait object（<a href="https://doc.rust-lang.org/stable/std/boxed/struct.Box.html"><code>Box&lt;_&gt;</code></a>）でdynamic dispatchを行ないます。</p>
+<p>trait object (<a href="https://doc.rust-lang.org/stable/std/boxed/struct.Box.html"><code>Box&lt;_&gt;</code></a>)でdynamic dispatchを行ないます。</p>
 </li>
 </ol>
+<p>なお、<a href="https://doc.rust-lang.org/stable/std/?search=Deref"><code>Deref</code></a>と<a href="https://doc.rust-lang.org/stable/std/ops/trait.DerefMut.html"><code>DerefMut</code></a>トレイトを実装すると、メソッド呼出時に自動的に対象の型への型変換が行われ、簡単に対象の型のメソッドを呼び出すことができるようになります。これを継承における「親クラスからのメソッドの受け継ぎ」に転用することは可能ですが、これはアンチパターンとされることも多いです (<a href="https://github.com/rust-unofficial/patterns/blob/master/anti_patterns/deref.md">参考</a>) 。</p>
+<p>その他また、Rustのトレイトは型クラスのように考えることもできます (<a href="https://keens.github.io/slide/katakurasuwokoete/">参考</a>) 。</p>
 </li>
 <li>
 <p><a href="https://doc.rust-lang.org/book/ch18-00-patterns.html#patterns-and-matching">パターンマッチング</a></p>
-<p>パターンマッチングは、端的に言うとタプルや構造体・列挙型などを (構造に合わせて分岐しながら) 分解し、中身を取り出す機能です。特に先に触れた列挙型を扱うにあたっては、パターンマッチは非常に強力な機能です。最近でも少しずつ改善が行なわれており、 Rust 1.26で<a href="https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html">slice pattern</a>が追加されたり1.39で<a href="https://github.com/rust-lang/rust/pull/63118/"><code>if</code>の制限の取り払われたり</a>しました。これらの改善もあり、特にML系言語に馴染みのある方は近い感覚で扱えるのではないでしょうか。</p>
+<p>パターンマッチングは、端的に言うならばタプルや構造体・列挙型などを (構造に合わせて分岐しながら) 分解し、中身を取り出す機能です。特に先に触れた列挙型を扱うにあたっては、パターンマッチは非常に強力な機能です。最近でも少しずつ改善が行なわれており、 Rust 1.26で<a href="https://doc.rust-lang.org/edition-guide/rust-2018/slice-patterns.html">slice pattern</a>が追加されたり1.39で<a href="https://github.com/rust-lang/rust/pull/63118/"><code>if</code>の制限の取り払われたり</a>しました。これらの改善もあり、特にML系言語に馴染みのある方は近い感覚で扱えるのではないでしょうか。</p>
 </li>
 <li>
 <p><a href="https://doc.rust-lang.org/book/ch19-06-macros.html"><strong>衛生的</strong>マクロ</a></p>
-<p>構文木が壊れるのはもちろん、識別子が衝突する心配もありません。
-安全性を保ったままで色々なことを可能にします。
-ボイラープレートもサクっと圧縮できます。
-この後述べるRustのデメリットはマクロで解決できるものが以外と多いです。</p>
+<p>衛生的とは識別子が衝突する心配がないことです。マクロ内で宣言されたローカル変数がマクロ外から参照できてしまうことも、その逆にマクロ内で参照する変数がたまたま展開先のローカル変数を参照してしまうこともありません。また、マクロの各引数が何を受け取るのかを指定することができるため、例えば式を受け取ると指定すればその引数はひとまとまりの式として扱われます。この式の値を利用するときに、前後の関係で式としての解釈が壊れることもありません (例えば <code>$x = 1 + 2</code> のとき <code>2 * $x</code> は <code>2 * 1 + 2</code> ではなく <code>2 * (1 + 2)</code> に相当します) 。</p>
+<p>このように、Rustのマクロは積極的に利用しても比較的安全です。特にRustでは多くなりがちなボイラープレートを短くまとめるなど役に立つ機会も多いでしょう。またマクロの入力はパターンマッチで行われるため受け付ける文法が比較的自由であり、この後に述べるRustのデメリットのうち特に冗長性に関わることは可読性を保ったままマクロで解決できることも多いです。</p>
 </li>
 <li>
 <p>block expression</p>
-<p>block expression とはブロックを式として扱える仕組みのことです。ブロックの式としての値はそのブロックの末尾にある式の値になります。これがあると例えば別の変数の初期化にしか使わない一時変数のスコープを絞ることができます。地味ですがあると便利に感じる機能です。</p>
+<p>block expression とはブロックを式として扱える仕組みのことです。ブロックの式としての値はそのブロックの末尾にある式の値になります。これがあると、例えば別の変数の初期化にしか使わない一時変数のスコープを絞ることができます。地味ではありますが、あると便利に感じる機能です。</p>
 </li>
 <li>
-<p><a href="https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#shadowing">シャドーイング（の推奨）</a></p>
-<p>Rustではシャドーイングが禁止されたり警告されるどころか推奨されています。
-これにより変なprefixやsuffixが付いた変数も宣言しなくて良くなりますし<code>mut</code>を消せる場合も出てきます。
-静的型付け言語なのでどの変数がどの型なのかは書いた時点できちんと定まっています。
-エディタ上なら（大抵）一目でわかります。</p>
-<p>また変数の数を抑止するという効果もあります。
-move semanticsにより<strong>減る</strong>場合もあるので上記のblock expressionと合わせれば同じ関数の実装を長々と書いてもあまり汚いコードにはなりません。
-競技プログラミングでは尚嬉しいのではないでしょうか。</p>
+<p><a href="https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#shadowing">シャドーイング (の推奨)</a></p>
+<p>一般的にシャドーイングはすべきでないとされる傾向がありますが、Rustではむしろシャドーイングが推奨されています。
+これにより、たとえば処理の途中で一度変数に格納するときにもわざわざprefixやsuffixが付いた別の変数を宣言しなくて良くなりますし、あるいは再束縛することで不要になった<code>mut</code>を消すこともできます。</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+// この配列を数値にしてかつソートしたい
+let list = vec![&quot;2&quot;, &quot;4&quot;, &quot;1&quot;, &quot;5&quot;, &quot;3&quot;];
+let list = list.into_iter().map(|x| x.parse().unwrap());
+// ソートしたいので mut とする
+let mut list: Vec&lt;i32&gt; = list.collect();
+list.sort();
+let list = list; // ソートしたので mut は不要、消す
+// list.push(4); // =&gt; 既に mut ではないので変更できない
+assert_eq!(list, [1, 2, 3, 4, 5]);
+#}</code></pre></pre>
+<p>一般にシャドーイングするべきではないとされる理由は様々にありますが、一番はやはり混同しやすくなるからと考えられます。その点Rustは強い静的型付け言語ですので、仮に混同したとしてもどこかのタイミングで型エラーになるという期待ができます。</p>
+<p>また、変数の個数を抑止するという効果もあります。block expression等と適宜組み合わせることで変数の数やスコープはさらに小さく保つことができ、多少関数の実装が長くなっても見通しが悪くなりにくいと言えます。競技プログラミングではmain関数が長くなりがちなので一層嬉しいのではないでしょうか。</p>
 </li>
 </ul>
-<p>あとRust特有の機能もパフォーマンスと安全性のみならず抽象化にも寄与することがあります。
-<a href="https://speakerdeck.com/qnighy/rust-imperative-language-2-dot-0?slide=29">&quot;Shared XOR mutable&quot;</a>（氏命名?）は不要な可変性を排除する助けになります。
-ライフタイム自体やmove semanticsもコードリーディングの助けになることが（偶に）あります。</p>
+<h4><a class="header" href="#ゼロコスト抽象化を追求している" id="ゼロコスト抽象化を追求している">ゼロコスト抽象化を追求している</a></h4>
+<p>Rustの言語デザインやライブラリは、一定の使いやすさを実現しつつも、使いやすさのために実行時の高速性を犠牲にはしないという<strong>ゼロコスト抽象化</strong> (<em>zero-cost abstraction</em>)を追求しています。</p>
+<p>他の言語では「イテレータではなくfor文で書いた方が速い」、「async/awaitを使うと遅い」といったことは珍しくありません。これはその言語の選択で、動作が遅くなるとしてもコードを簡潔に簡単に書けることを優先したと言えます。一方でRustでは抽象化によってパフォーマンスが犠牲になるのなら、その抽象化はできるだけ採用しません。最適化の余地 (自由度) を残すためには関数群は基礎的なものにとどめる必要があり、特定の機能を実現するために冗長なコードを書く必要があります。結果的にコードは長く面倒になり手間もかかりますが、そうしてでもパフォーマンスをとることができるように設計されています。</p>
+<p>このことは「簡潔な構文や関数によってその機能が必要とするコストを隠してしまう」ことを避けているとも言えます。つまり、本当にパフォーマンスが必要なときに最適化を検討するべき「コスト」の部分が明確化されているということでもあります。</p>
 <h3><a class="header" href="#デメリット" id="デメリット">デメリット</a></h3>
 <h4><a class="header" href="#現れる概念が比較的難しい" id="現れる概念が比較的難しい">現れる概念が比較的難しい</a></h4>
 <p>先に見たように、Rustでは、いままで他の言語ではコンパイラが検証していなかったようなことをコンパイル時に検証します。そのためにRustでは所有権や借用をはじめとする独特の概念が導入されており、それらの概念の理解そのものが難しいとされることも多いようです。これらの概念が課す多数のルールがなぜ存在するのかを理解することは、仕組みをある程度理解していなければ難しいものです。</p>
@@ -412,15 +415,15 @@ move semanticsにより<strong>減る</strong>場合もあるので上記のbloc
 <li>空白区切りの入力を任意の型の値として読み込むことができない。
 <code>std</code>には整数を読む機能などはなく、かならず一行単位 (<code>read_line()</code>) または全体 (<code>read_to_string()</code>) を文字列として読んでから処理する必要があります。なお<code>read_to_string()</code>を使うときは、<code>use std::io::Read;</code>が必要であることと、手元でテストするときにEOF (<code>Ctrl + D</code> (macOSやLinux) または<code>Ctrl + Z</code> (Windows)) を入力するまで入力が終了しないこと、に注意が必要です。</li>
 <li>入力はバッファをとって、そこに書き込む。
-<code>read_line(&amp;mut s)</code>の部分にあたります。入力を<code>String</code>に入れて返す関数よりも、バッファを受けとって書き込む方式の方が、必要に応じてバッファを事前にアロケートしておける分、パフォーマンス的には柔軟なのです。とはいえ競技プログラミングでは高々O(log n)回のリアロケーション（この挙動はドキュメント化されていないみたいですが）にかかるコストを気にする必要はないと思われます。</li>
+<code>read_line(&amp;mut s)</code>の部分にあたります。入力を<code>String</code>に入れて返す関数よりも、バッファを受けとって書き込む方式の方が、必要に応じてバッファを事前にアロケートしておける分、パフォーマンス的には柔軟なのです。とはいえ競技プログラミングでは高々O(log n)回のリアロケーション (この挙動はドキュメント化されていないため変わる可能性もなくはありませんが) にかかるコストを気にする必要はないと思われます。</li>
 <li>イテレータを上手に扱う必要がある。
-受け取った文字列を空白区切りにするためには<code>split_whitespace()</code>という関数を使いますが、これはイテレータを返します。その各要素を整数に変換するために<code>map()</code>と<code>parse()</code>関数を使いますが、変換先の型を指定するために<code>parse::&lt;i32&gt;()</code>などの書き方を使います。<a href="https://crates.io/crates/itertools"><code>itertools</code></a>を使えば<a href="https://docs.rs/itertools/0.8.2/itertools/trait.Itertools.html#method.next_tuple">Pythonの<code>a, b = iter</code>のようにイテレータを直接分解するような書き方ができますが</a>、<code>std</code>だけだと一つずつ<code>next()</code>で要素を取り出してタプルを作る必要があります。</li>
+受け取った文字列を空白区切りにするためには<code>split_whitespace()</code>という関数を使いますが、これはイテレータを返します。その各要素を整数に変換するために<code>map()</code>と<code>parse()</code>関数を使いますが、変換先の型を指定するために<code>parse::&lt;i32&gt;()</code>などの書き方を使う必要があります。<a href="https://crates.io/crates/itertools"><code>itertools</code></a> を使えば<a href="https://docs.rs/itertools/0.8.2/itertools/trait.Itertools.html#method.next_tuple">イテレータを直接分解するような書き方ができますが</a> 、<code>std</code>に限れば一つずつ<code>next()</code>で要素を取り出すしかありません。</li>
 <li><code>std</code>を含む各ライブラリは大抵明示的なエラーハンドリングを要求する。
 <ul>
-<li>何かの理由で標準入力が読み込めない状態になるかもしれません。整数ではない入力を整数にしようとするかもしれません。イテレータの要素が足りないかもしれません。こういったものをRustでは<a href="https://doc.rust-lang.org/stable/std/option/enum.Option.html"><code>Option</code></a>や<a href="https://doc.rust-lang.org/stable/std/result/enum.Result.html"><code>Result</code></a>で表現します。<a href="https://doc.rust-lang.org/edition-guide/rust-2018/error-handling-and-panics/the-question-mark-operator-for-easier-error-handling.html"><code>?</code></a>を使えば視認性を損ねることはない（むしろコードを俯瞰するときのの助けになる）ですが競技プログラミングでは<code>unwrap()</code>を使うことになるでしょう。これはエラーが起きたならパニック（i.e. <code>RE</code>） するという乱暴なものですが、入力の形式が決まっている以上エラーになるのは読み間違えたか書き間違えたときのみでしょう。</li>
+<li>何かの理由で標準入力が読み込めない状態になるかもしれません。整数ではない入力を整数にしようとするかもしれません。イテレータの要素が足りないかもしれません。こういったものをRustでは<a href="https://doc.rust-lang.org/stable/std/option/enum.Option.html"><code>Option</code></a>や<a href="https://doc.rust-lang.org/stable/std/result/enum.Result.html"><code>Result</code></a>で表現します。<a href="https://doc.rust-lang.org/edition-guide/rust-2018/error-handling-and-panics/the-question-mark-operator-for-easier-error-handling.html"><code>?</code></a>を使えば視認性を損ねることはない (むしろコードを俯瞰するときのの助けになる) ですが競技プログラミングでは<code>unwrap()</code>を使うことになるでしょう。これはエラーが起きたならパニック (i.e. <code>RE</code>) するという乱暴なものですが、入力の形式が決まっている以上エラーになるのは読み間違えたか書き間違えたときのみでしょう。</li>
 <li>もちろん逆に、明示的なエラーハンドリングは要求しないかわりに失敗時は内部でパニックするような関数もあります。
 例えば<a href="https://doc.rust-lang.org/stable/std/ops/trait.Index.html"><code>Index</code></a>で境界外アクセスしたときやメモリが足りずにアロケーションに失敗したとき、<a href="https://doc.rust-lang.org/std/macro.println.html#panics"><code>println!</code>が失敗したとき</a>にパニックします。
-このように『失敗するとパニックする』ものはその条件をドキュメントに<code># Panics</code>という形で書いています。</li>
+このように「失敗するとパニックする」ものはその条件をドキュメントに<code># Panics</code>という形で書いています。</li>
 </ul>
 </li>
 </ul>
