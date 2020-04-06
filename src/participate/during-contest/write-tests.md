@@ -1,3 +1,5 @@
+<!-- -*- coding:utf-8-unix -*- -->
+
 # テストケースの作成
 
 Rust には組み込みでテストをするための機構が備わっています。これらの様式に則ってテストを書くと、 `cargo test` コマンドを実行するだけでテストを実行することができます。これを競プロでもサンプルケースが通るかどうかを確かめるのに利用することができます。この機能の使い方の例として、生成したテンプレートの `tests/sample_inputs.rs` には [AtCoder Beginner Contest 086 C - Traveling](https://atcoder.jp/contests/abc086/tasks/arc089_a) のサンプルケースが書かれています。

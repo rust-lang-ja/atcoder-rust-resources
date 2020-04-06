@@ -12,6 +12,7 @@
 
 では、実際にプロジェクトを生成していきます。
 
+
 ## `cargo-generate` をインストールしている場合
 
 `cargo generate` コマンドをインストールしている場合は、次のようにコマンドを実行してプロジェクト名を入力すれば AtCoder での環境と同様の環境のプロジェクトが生成できます。
@@ -26,6 +27,7 @@ Done! New project created /path/to/project/abc000
 これで表示されているパスにプロジェクトが生成されました。
 
 > Note: ここで生成されるプロジェクトはサンプルとして [AtCoder Beginner Contest 086 C - Traveling](https://atcoder.jp/contests/abc086/tasks/arc089_a) の解答例とサンプルケースのテスト方法例が書かれてます。テンプレートを自分向けにカスタマイズしたい場合は、リポジトリをフォークするなどして編集し、それを URL に指定して生成させることもできます。
+
 
 ## `cargo-generate` をインストールしていない場合
 
