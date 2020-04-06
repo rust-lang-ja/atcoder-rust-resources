@@ -25,7 +25,7 @@ Done! New project created /path/to/project/abc000
 
 これで表示されているパスにプロジェクトが生成されました。
 
-> Note: ここで生成されるプロジェクトはサンプルとして AtCoder Beginner Contest 086 C - Traveling の解答例とサンプルケースのテスト方法例が書かれてます。テンプレートを自分向けにカスタマイズしたい場合は、リポジトリをフォークするなどして編集し、それを URL に指定して生成させることもできます。
+> Note: ここで生成されるプロジェクトはサンプルとして [AtCoder Beginner Contest 086 C - Traveling](https://atcoder.jp/contests/abc086/tasks/arc089_a) の解答例とサンプルケースのテスト方法例が書かれてます。テンプレートを自分向けにカスタマイズしたい場合は、リポジトリをフォークするなどして編集し、それを URL に指定して生成させることもできます。
 
 ## `cargo-generate` をインストールしていない場合
 
