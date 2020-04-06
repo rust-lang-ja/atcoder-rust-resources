@@ -20,6 +20,7 @@
   - 例：標準ライブラリのハッシュ関数はDoS攻撃を避けるために暗号強度があり、計算量が多い。
     競技プログラミングでは暗号強度は求められず、より計算量の少ないハッシュ関数で十分
 
+
 ### AtCoder運営者様へのお願い
 
 対象クレートの一覧は[このページ][crates-2019]にあります。
@@ -37,6 +38,7 @@
 一般的なCargoを使用した開発では、`Cargo.toml`という設定ファイルに依存クレートの情報を記述します。
 `cargo build`コマンドを実行すると、Cargoはそれらのクレートのソースコードをダウンロードし、適切なオプションと共に`rustc`を実行することでクレートをコンパイルします。
 クレートのソースコードは`$CARGO_HOME/registory/src`にダウンロードされ、コンパイル済みのクレート（`rlib`ファイル）は`Cargo.toml`が置かれたディレクトリを起点とする相対ディレクトリ`./target/release/deps`配下に出力されます。
+
 
 ### 一般的な開発時のファイルレイアウト
 
@@ -63,6 +65,7 @@ $HOME   # ユーザのホームディレクトリ
 
 まず、今回は各ファイルを以下のように配置し、クレートのコンパイルは導入時に済ませておくことにします。
 
+
 ### AtCoderジャッジサーバでのファイルレイアウト（導入時に配置するもの）
 
 ```console
@@ -82,6 +85,7 @@ $RUST_HOME (/usr/local/lib/rust)
 
 そしてジャッジの際には[以前説明した](./supported-environment.md#一般的なrustプログラム開発環境との違い)Cargoを利用する方法と`rustc`を利用する方法のいずれかを利用してコンパイルします。
 
+
 ### [cargo] AtCoderジャッジサーバでのファイルレイアウト（ジャッジの際に作成するもの）
 
 ```console
@@ -95,6 +99,7 @@ $HOME                      # ユーザのホームディレクトリ
                 |-- deps   # (外部クレートのコンパイルキャッシュ)
                 └-- atcoder-rust-base # コンパイル、リンク済みの実行ファイル
 ```
+
 
 ### [rustc] AtCoderジャッジサーバでのファイルレイアウト（ジャッジの際に作成するもの）
 
@@ -343,6 +348,7 @@ _108 = {package = "whiteread",version = "=0.4.4",default-features = false,featur
 [the-cargo-book-platform-specific-dependencies]: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies
 [the-cargo-book-specifying-dependencies]:        https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies
 
+
 ## クレートのコンパイル
 
 クレートをコンパイルしましょう。
@@ -371,4 +377,3 @@ $ find target/release/deps/ -type f | egrep -c '\.(rlib|so)$'
 66
 # ↑ 上の数字を確認
 ```
-
