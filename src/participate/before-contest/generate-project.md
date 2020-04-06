@@ -35,3 +35,5 @@ $ cargo init abc000
 ```
 
 そして `abc000/Cargo.toml` の `[dependencies]` 以下に AtCoder で利用できるライブラリを追加してください。 [atcoder-rust-base](https://github.com/rust-lang-ja/atcoder-rust-base) の [ja ブランチ](https://github.com/rust-lang-ja/atcoder-rust-base/tree/ja) に含まれている Cargo.toml の雛形を参考にできます。ただしこれは `cargo-generate` 用の雛形のためプロジェクト名など一部の項目がプレースホルダになっており、そのまま使えるものではないことに注意が必要です。もし完全な形の Cargo.toml をお探しなら、 [ja-all-enabled ブランチ](https://github.com/rust-lang-ja/atcoder-rust-base/tree/ja-all-enabled) に有効な形の Cargo.toml が含まれていますので、こちらを利用することもできます。
+
+また、 Rustup を利用している場合、プロジェクトディレクトリに `rust-toolchain` というファイルを置いて中身に `1.42.0` とだけ書いておくと、 `cargo` などのツールを呼び出したときに自動的に Rust 1.42.0 のツールチェインを利用してくれます。もしそのツールチェインがインストールされていなければ自動でダウンロードが始まり、インストールされます。この先しばらくして Rust のバージョンアップが進み、再び AtCoder 側のバージョンとの乖離が大きくなってきたときは、間違って 1.43 以降にしか存在しない機能を利用してしまって Compilation Error を受けないためにも強制的に 1.42.0 を利用させるのが便利です。
