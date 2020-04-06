@@ -3,10 +3,7 @@
 # Summary
 
 - [はじめに](./introduction.md)
-- [AtCoderの環境について (TODO)](./todo.md)
-  - [ソフトウェアのバージョンなど (TODO)](./todo.md)
-  - [単一のソースファイル (TODO)](./todo.md)
-  - [利用可能なクレート (TODO)](./todo.md)
+- [AtCoderの環境について](./environment.md)
 - [開発環境の準備 (TODO)](./installation/index.md)
   - [Rustツールチェインのインストール (TODO)](./installation/toolchain.md)
   - [ソースコードエディタの準備 (TODO)](./installation/editor.md)
@@ -22,8 +19,8 @@
     - [プログラムの作成 (TODO)](./participate/during-contest/write-program.md)
     - [プログラムのテスト](./participate/during-contest/test.md)
     - [プログラムの提出 (TODO)](./participate/during-contest/submit.md)
-- [Tips（小技集） (TODO)](./todo.md)
-  - [クレートの使用例 (TODO)](./todo.md)
+- [Tips（小技集） (TODO)](./tips.md)
+  - [クレートの使用例](./use-crates.md)
 - [AtCoder運営者向けの情報](./atcoder-env/index.md)
   - [本章で想定している環境](./atcoder-env/supported-environment.md)
   - [インストール](./atcoder-env/installation.md)
