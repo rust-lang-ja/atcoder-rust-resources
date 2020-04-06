@@ -21,7 +21,7 @@
     - [テストケースの作成 (TODO)](./participate/during-contest/write-tests.md)
     - [プログラムの作成 (TODO)](./participate/during-contest/write-program.md)
     - [プログラムのテスト (TODO)](./participate/during-contest/test.md)
-    - [プログラムの提出 (TODO)](./todo.md)
+    - [プログラムの提出 (TODO)](./participate/during-contest/submit.md)
 - [Tips（小技集） (TODO)](./todo.md)
   - [クレートの使用例 (TODO)](./todo.md)
 - [AtCoder運営者向けの情報](./atcoder-env/index.md)
