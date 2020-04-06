@@ -12,7 +12,7 @@
   - [ソースコードエディタの準備 (TODO)](./installation/editor.md)
   - [cargo-generateのインストール (TODO)](./installation/cargo-generate.md)
 - [コンテストの参加方法 (TODO)](./participate/index.md)
-  - [コンテスト直前の事前準備 (TODO)](./todo.md)
+  - [コンテスト直前の事前準備 (TODO)](./participate/before-contest/index.md)
     - [Cargoパッケージの作成 (TODO)](./todo.md)
     - [利用するクレートの選択 (TODO)](./todo.md)
     - [依存クレートのコンパイル (TODO)](./todo.md)
