@@ -4,7 +4,7 @@
 
 **TODO** このページは書きかけです。
 
-**Note:** インストール方法は適宜変わる可能性があります。情報が古いまたは不足している場合は、公式の [book](https://doc.rust-lang.org/book/ch01-01-installation.html) にある解説を適宜参照ください (英語) 。
+> Note: インストール方法は適宜変わる可能性があります。情報が古いまたは不足している場合は、公式の [book](https://doc.rust-lang.org/book/ch01-01-installation.html) にある解説を適宜参照ください (英語) 。
 
 まずは Rust 本体をインストールする必要があります。
 
