@@ -16,7 +16,7 @@
     - [Cargoパッケージの作成 (TODO)](./todo.md)
     - [利用するクレートの選択 (TODO)](./todo.md)
     - [依存クレートのコンパイル (TODO)](./todo.md)
-  - [コンテスト開始後の流れ (TODO)](./todo.md)
+  - [コンテスト開始後の流れ (TODO)](./participate/during-contest/index.md)
     - [テストケースの作成 (TODO)](./todo.md)
     - [プログラムの作成 (TODO)](./todo.md)
     - [プログラムのテスト (TODO)](./todo.md)
