@@ -20,7 +20,7 @@
   - [コンテスト開始後の流れ (TODO)](./participate/during-contest/index.md)
     - [テストケースの作成 (TODO)](./participate/during-contest/write-tests.md)
     - [プログラムの作成 (TODO)](./participate/during-contest/write-program.md)
-    - [プログラムのテスト (TODO)](./todo.md)
+    - [プログラムのテスト (TODO)](./participate/during-contest/test.md)
     - [プログラムの提出 (TODO)](./todo.md)
 - [Tips（小技集） (TODO)](./todo.md)
   - [クレートの使用例 (TODO)](./todo.md)
