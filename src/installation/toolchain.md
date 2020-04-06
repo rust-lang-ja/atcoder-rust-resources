@@ -1,6 +1,6 @@
 <!-- -*- coding:utf-8-unix -*- -->
 
-# Rust ツールチェインのインストール (TODO)
+# Rust ツールチェインのインストール
 
 **TODO** このページは書きかけです。
 
@@ -13,12 +13,17 @@
 
 OS によっては Rust を実行するのに追加のプログラムが必要になりますので、まずはそれをインストールしましょう。
 
-- Windows  
-    TODO: Visual Studio Build Tools などをインストール
+- Windows
+
+    (TODO: Visual Studio Build Tools をインストール)
+
 - macOS
-    TODO: Cコンパイラ (に付属するリンカー) のインストール
+
+    (TODO: Cコンパイラ (に付属するリンカー) のインストール)
+
 - Linux (Windows Subsystem for Linux を含む)  
-    TODO: Cコンパイラ (に付属するリンカー) のインストール
+
+    (TODO: Cコンパイラ (に付属するリンカー) のインストール)
 
 
 ## ステップ 2: Rustup のインストールスクリプトを実行する
@@ -27,12 +32,15 @@ OS によっては標準のパッケージ管理に Rust のパッケージが�
 
 <https://rustup.rs/> にアクセスすると、お使いのプラットフォームに合わせてインストールスクリプトを実行する方法が表示されます。大きくは Windows と macOS/Linux で分かれます。
 
-- Windows  
+- Windows
+
     `rustup-init.exe` のような実行ファイルのダウンロードリンクが示されていると思いますので、それをダウンロードして実行します。
-- macOS / Linux (Windows Subsystem for Linux 含む)  
+
+- macOS / Linux (Windows Subsystem for Linux 含む)
+
     `curl` を用いてスクリプトをダウンロード・実行する方法が示されていると思います。書かれているコマンドをターミナルへ入力してください。
 
-TODO: 以下、スクリプトの指示に従ってインストールする方法とインストールを確認する方法を書く
+(TODO: 以下、スクリプトの指示に従ってインストールする方法とインストールを確認する方法を書く)
 
 
 ## ステップ 3: インストールされたことを確認する

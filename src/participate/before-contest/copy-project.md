@@ -1,6 +1,8 @@
 <!-- -*- coding:utf-8-unix -*- -->
 
-# プロジェクトのコピー (TODO)
+# プロジェクトのコピー
+
+**TODO** このページは書きかけです。
 
 競プロで書くコードは書き捨てにする、という方は先程作ったプロジェクトをすべての問題で使いまわしても問題ありませんが、コードをずっと残しておきたいとか、あるいは詰まったから一旦保存しておいて別の問題に行きたいことがよくある、といった事情で、プロジェクトを予め問題数分用意しておきたい方もいるかと思われます。この作業も少々手間ですので、このようにされたい方はコンテスト前に準備しておくとよいでしょう。
 
@@ -10,10 +12,10 @@
 
 - Windows
 
-    TODO: ジャンクション (`mklink /J target /path/to/original/target`) または (必要ならローカルセキュリティポリシーまたはレジストリエディタを使って SeCreateSymbolicLinkPrivilege 権限を有効にして) シンボリックリンク (`mklink /D target /path/to/original/target`)
+    (TODO: ジャンクション (`mklink /J target /path/to/original/target`) または (必要ならローカルセキュリティポリシーまたはレジストリエディタを使って SeCreateSymbolicLinkPrivilege 権限を有効にして) シンボリックリンク (`mklink /D target /path/to/original/target`))
 
 - macOS または Linux
 
-    TODO: `ln -s /path/to/original/target target`
+    (TODO: `ln -s /path/to/original/target target`)
 
 ただし、このときはメインバイナリ `target/debug/<project-name>` すらも共有になってしまうため、別のプロジェクトを `cargo run` する前に `cargo clean -p <project-name>` としてバイナリを削除する必要があります。 `cargo` はおそらくソースファイルとバイナリの更新日時を比較してリビルドの要不要を判断しているため、状態によっては前のプロジェクトの成果物をそのまま実行してしまうことがあります。

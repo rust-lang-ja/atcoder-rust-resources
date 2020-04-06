@@ -2,11 +2,9 @@
 
 # `cargo-generate` のインストール
 
-**TODO** このページは書きかけです。
-
 AtCoder で利用できる Rust のバージョンやライブラリを指定したプロジェクトを簡単に生成するために、 [atcoder-rust-base の ja ブランチ](https://github.com/rust-lang-ja/atcoder-rust-base/tree/ja)にプロジェクトの雛形を用意しています。この雛形は`cargo generate`というコマンドを使って展開するため、先にこのコマンドをインストールする必要があります。
 
-`cargo generate` サブコマンドを利用できるようにするには `cargo-generate` が必要です。端末 (Windows ユーザーの方はコマンド プロンプト) を開いて `cargo install cargo-generate` コマンドを実行してください。これだけでインストールできます。
+`cargo generate` サブコマンドを利用できるようにするには `cargo-generate` が必要です。端末 (Windows ユーザーの方はコマンド プロンプト) を開いて `cargo install cargo-generate` コマンドを実行してください。これだけでインストールは完了です。
 
 ```console
 $ cargo install cargo-generate
