@@ -15,6 +15,7 @@
   - [コンテスト直前の事前準備 (TODO)](./participate/before-contest/index.md)
     - [Cargoパッケージの作成 (TODO)](./participate/before-contest/generate-project.md)
     - [利用するクレートの選択とコンパイル (TODO)](./participate/before-contest/choose-crates.md)
+    - [プロジェクトのコピー (TODO)](./participate/before-contest/copy-project.md)]
   - [コンテスト開始後の流れ (TODO)](./participate/during-contest/index.md)
     - [テストケースの作成 (TODO)](./todo.md)
     - [プログラムの作成 (TODO)](./todo.md)
