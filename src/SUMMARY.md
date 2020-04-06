@@ -18,7 +18,7 @@
     - [利用するクレートの選択とコンパイル (TODO)](./participate/before-contest/choose-crates.md)
     - [プロジェクトのコピー (TODO)](./participate/before-contest/copy-project.md)]
   - [コンテスト開始後の流れ (TODO)](./participate/during-contest/index.md)
-    - [テストケースの作成 (TODO)](./todo.md)
+    - [テストケースの作成 (TODO)](./participate/during-contest/write-tests.md)
     - [プログラムの作成 (TODO)](./todo.md)
     - [プログラムのテスト (TODO)](./todo.md)
     - [プログラムの提出 (TODO)](./todo.md)
