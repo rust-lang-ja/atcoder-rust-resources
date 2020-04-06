@@ -19,7 +19,7 @@
     - [プロジェクトのコピー (TODO)](./participate/before-contest/copy-project.md)]
   - [コンテスト開始後の流れ (TODO)](./participate/during-contest/index.md)
     - [テストケースの作成 (TODO)](./participate/during-contest/write-tests.md)
-    - [プログラムの作成 (TODO)](./todo.md)
+    - [プログラムの作成 (TODO)](./participate/during-contest/write-program.md)
     - [プログラムのテスト (TODO)](./todo.md)
     - [プログラムの提出 (TODO)](./todo.md)
 - [Tips（小技集） (TODO)](./todo.md)
