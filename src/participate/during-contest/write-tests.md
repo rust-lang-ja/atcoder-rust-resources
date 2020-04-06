@@ -8,7 +8,7 @@ Rust には組み込みでテストをするための機構が備わっていま
 
 なんとなく見れば分かるように、 `output_with_stdin()` の引数にサンプル入力を渡し `assert_eq!(output.stdout_str(), <expected output>);` で期待する出力と一致するかどうかを確かめます。一致しない場合、テストは失敗します。
 
-```rust
+```rust,ignore
 use cli_test_dir::*;
 
 const BIN: &'static str = "./main";
