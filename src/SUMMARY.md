@@ -10,6 +10,7 @@
 - [開発環境の準備 (TODO)](./installation/index.md)
   - [Rustツールチェインのインストール (TODO)](./installation/toolchain.md)
   - [ソースコードエディタの準備 (TODO)](./installation/editor.md)
+  - [Rust Language Server のインストール (TODO)](./installation/rls.md)
   - [cargo-generateのインストール (TODO)](./installation/cargo-generate.md)
 - [コンテストの参加方法 (TODO)](./participate/index.md)
   - [コンテスト直前の事前準備 (TODO)](./participate/before-contest/index.md)
