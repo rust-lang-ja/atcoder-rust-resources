@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>コンパイルコマンドと実行コマンド - AtCoderコンテストにRustで参加するためのガイドブック</title>
+        <title>cargo-generateのインストール - AtCoderコンテストにRustで参加するためのガイドブック</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li><a href="../environment.html"><strong aria-hidden="true">2.</strong> AtCoderの環境について</a></li><li><a href="../installation/index.html"><strong aria-hidden="true">3.</strong> 開発環境の準備 (TODO)</a></li><li><ol class="section"><li><a href="../installation/toolchain.html"><strong aria-hidden="true">3.1.</strong> Rustツールチェインのインストール (TODO)</a></li><li><a href="../installation/editor.html"><strong aria-hidden="true">3.2.</strong> ソースコードエディタの準備 (TODO)</a></li><li><a href="../installation/rls.html"><strong aria-hidden="true">3.3.</strong> Rust Language Server のインストール</a></li><li><a href="../installation/cargo-generate.html"><strong aria-hidden="true">3.4.</strong> cargo-generateのインストール</a></li></ol></li><li><a href="../participate/index.html"><strong aria-hidden="true">4.</strong> コンテストの参加方法 (TODO)</a></li><li><ol class="section"><li><a href="../participate/before-contest/index.html"><strong aria-hidden="true">4.1.</strong> コンテスト直前の事前準備</a></li><li><ol class="section"><li><a href="../participate/before-contest/generate-project.html"><strong aria-hidden="true">4.1.1.</strong> Cargoパッケージの作成 (TODO)</a></li><li><a href="../participate/before-contest/choose-crates.html"><strong aria-hidden="true">4.1.2.</strong> 利用するクレートの選択とコンパイル (TODO)</a></li><li><a href="../participate/before-contest/copy-project.html"><strong aria-hidden="true">4.1.3.</strong> プロジェクトのコピー (TODO)</a></li></ol></li><li><a href="../participate/during-contest/index.html"><strong aria-hidden="true">4.2.</strong> コンテスト開始後の流れ</a></li><li><ol class="section"><li><a href="../participate/during-contest/write-tests.html"><strong aria-hidden="true">4.2.1.</strong> テストケースの作成</a></li><li><a href="../participate/during-contest/write-program.html"><strong aria-hidden="true">4.2.2.</strong> プログラムの作成 (TODO)</a></li><li><a href="../participate/during-contest/test.html"><strong aria-hidden="true">4.2.3.</strong> プログラムのテスト</a></li><li><a href="../participate/during-contest/submit.html"><strong aria-hidden="true">4.2.4.</strong> プログラムの提出 (TODO)</a></li></ol></li></ol></li><li><a href="../tips.html"><strong aria-hidden="true">5.</strong> Tips（小技集） (TODO)</a></li><li><ol class="section"><li><a href="../use-crates.html"><strong aria-hidden="true">5.1.</strong> クレートの使用例</a></li></ol></li><li><a href="../atcoder-env/index.html"><strong aria-hidden="true">6.</strong> AtCoder運営者向けの情報</a></li><li><ol class="section"><li><a href="../atcoder-env/supported-environment.html"><strong aria-hidden="true">6.1.</strong> 本章で想定している環境</a></li><li><a href="../atcoder-env/installation.html"><strong aria-hidden="true">6.2.</strong> インストール</a></li><li><ol class="section"><li><a href="../atcoder-env/installing-rust-toolchain.html"><strong aria-hidden="true">6.2.1.</strong> Rustツールチェインのインストール</a></li><li><a href="../atcoder-env/installing-rust-crates.html"><strong aria-hidden="true">6.2.2.</strong> クレートのコンパイルとインストール</a></li><li><a href="../atcoder-env/installing-rustc-dep-option-generator.html"><strong aria-hidden="true">6.2.3.</strong> （オプション）クレート検索パス生成ツールのインストール</a></li></ol></li><li><a href="../atcoder-env/compiling-and-running-program.html" class="active"><strong aria-hidden="true">6.3.</strong> コンパイルコマンドと実行コマンド</a></li><li><ol class="section"><li><a href="../atcoder-env/compiling-and-running-using-rustc.html"><strong aria-hidden="true">6.3.1.</strong> rustcを利用する</a></li><li><a href="../atcoder-env/compiling-and-running-using-cargo.html"><strong aria-hidden="true">6.3.2.</strong> cargoを利用する</a></li></ol></li></ol></li><li><a href="../contributors.html"><strong aria-hidden="true">7.</strong> コントリビュータ (TODO)</a></li></ol>
+                <ol class="chapter"><li><a href="../introduction.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li><a href="../environment.html"><strong aria-hidden="true">2.</strong> AtCoderの環境について</a></li><li><a href="../installation/index.html"><strong aria-hidden="true">3.</strong> 開発環境の準備 (TODO)</a></li><li><ol class="section"><li><a href="../installation/toolchain.html"><strong aria-hidden="true">3.1.</strong> Rustツールチェインのインストール (TODO)</a></li><li><a href="../installation/editor.html"><strong aria-hidden="true">3.2.</strong> ソースコードエディタの準備 (TODO)</a></li><li><a href="../installation/rls.html"><strong aria-hidden="true">3.3.</strong> Rust Language Server のインストール</a></li><li><a href="../installation/cargo-generate.html" class="active"><strong aria-hidden="true">3.4.</strong> cargo-generateのインストール</a></li></ol></li><li><a href="../participate/index.html"><strong aria-hidden="true">4.</strong> コンテストの参加方法 (TODO)</a></li><li><ol class="section"><li><a href="../participate/before-contest/index.html"><strong aria-hidden="true">4.1.</strong> コンテスト直前の事前準備</a></li><li><ol class="section"><li><a href="../participate/before-contest/generate-project.html"><strong aria-hidden="true">4.1.1.</strong> Cargoパッケージの作成 (TODO)</a></li><li><a href="../participate/before-contest/choose-crates.html"><strong aria-hidden="true">4.1.2.</strong> 利用するクレートの選択とコンパイル (TODO)</a></li><li><a href="../participate/before-contest/copy-project.html"><strong aria-hidden="true">4.1.3.</strong> プロジェクトのコピー (TODO)</a></li></ol></li><li><a href="../participate/during-contest/index.html"><strong aria-hidden="true">4.2.</strong> コンテスト開始後の流れ</a></li><li><ol class="section"><li><a href="../participate/during-contest/write-tests.html"><strong aria-hidden="true">4.2.1.</strong> テストケースの作成</a></li><li><a href="../participate/during-contest/write-program.html"><strong aria-hidden="true">4.2.2.</strong> プログラムの作成 (TODO)</a></li><li><a href="../participate/during-contest/test.html"><strong aria-hidden="true">4.2.3.</strong> プログラムのテスト</a></li><li><a href="../participate/during-contest/submit.html"><strong aria-hidden="true">4.2.4.</strong> プログラムの提出 (TODO)</a></li></ol></li></ol></li><li><a href="../tips.html"><strong aria-hidden="true">5.</strong> Tips（小技集） (TODO)</a></li><li><ol class="section"><li><a href="../use-crates.html"><strong aria-hidden="true">5.1.</strong> クレートの使用例</a></li></ol></li><li><a href="../atcoder-env/index.html"><strong aria-hidden="true">6.</strong> AtCoder運営者向けの情報</a></li><li><ol class="section"><li><a href="../atcoder-env/supported-environment.html"><strong aria-hidden="true">6.1.</strong> 本章で想定している環境</a></li><li><a href="../atcoder-env/installation.html"><strong aria-hidden="true">6.2.</strong> インストール</a></li><li><ol class="section"><li><a href="../atcoder-env/installing-rust-toolchain.html"><strong aria-hidden="true">6.2.1.</strong> Rustツールチェインのインストール</a></li><li><a href="../atcoder-env/installing-rust-crates.html"><strong aria-hidden="true">6.2.2.</strong> クレートのコンパイルとインストール</a></li><li><a href="../atcoder-env/installing-rustc-dep-option-generator.html"><strong aria-hidden="true">6.2.3.</strong> （オプション）クレート検索パス生成ツールのインストール</a></li></ol></li><li><a href="../atcoder-env/compiling-and-running-program.html"><strong aria-hidden="true">6.3.</strong> コンパイルコマンドと実行コマンド</a></li><li><ol class="section"><li><a href="../atcoder-env/compiling-and-running-using-rustc.html"><strong aria-hidden="true">6.3.1.</strong> rustcを利用する</a></li><li><a href="../atcoder-env/compiling-and-running-using-cargo.html"><strong aria-hidden="true">6.3.2.</strong> cargoを利用する</a></li></ol></li></ol></li><li><a href="../contributors.html"><strong aria-hidden="true">7.</strong> コントリビュータ (TODO)</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -146,25 +146,51 @@
                 <div id="content" class="content">
                     <main>
                         <!-- -*- coding:utf-8-unix -*- -->
-<h1><a class="header" href="#コンパイルコマンドと実行コマンド" id="コンパイルコマンドと実行コマンド">コンパイルコマンドと実行コマンド</a></h1>
-<p>このページではジャッジサーバでユーザプログラムをコンパイルし、実行するためのコマンドを説明します。</p>
-<ul>
-<li><a href="./compiling-and-running-using-rustc.html">rustcを利用する</a></li>
-<li><a href="./compiling-and-running-using-cargo.html">cargoを利用する</a></li>
-</ul>
+<h1><a class="header" href="#cargo-generate-のインストール" id="cargo-generate-のインストール"><code>cargo-generate</code> のインストール</a></h1>
+<p>AtCoder で利用できる Rust のバージョンやライブラリを指定したプロジェクトを簡単に生成するために、 <a href="https://github.com/rust-lang-ja/atcoder-rust-base/tree/ja">atcoder-rust-base の ja ブランチ</a>にプロジェクトの雛形を用意しています。この雛形は<code>cargo generate</code>というコマンドを使って展開するため、先にこのコマンドをインストールする必要があります。</p>
+<p><code>cargo generate</code> サブコマンドを利用できるようにするには <code>cargo-generate</code> が必要です。端末 (Windows ユーザーの方はコマンド プロンプト) を開いて <code>cargo install cargo-generate</code> コマンドを実行してください。これだけでインストールは完了です。</p>
+<pre><code class="language-console">$ cargo install cargo-generate
+    Updating crates.io index
+Downloaded cargo-generate v0.5.0
+(...中略...)
+    Compiling cargo-generate v0.5.0
+    Finished release [optimized] target(s) in 5m 46s
+Installing ...
+    Installed package `cargo-generate v0.5.0` (executable `...`)
+</code></pre>
+<p>実際に <code>cargo generate --help</code> として実行できるかどうかを確認しましょう。</p>
+<pre><code class="language-console">$ cargo generate --help
+cargo-generate 0.5.0
+Ashley Williams &lt;ashley666ashley@gmail.com&gt;
+cargo, make me a project
+
+USAGE:
+    cargo generate [FLAGS] [OPTIONS] --git &lt;git&gt;
+
+FLAGS:
+    -f, --force      Enforce to create a new project without case conversion of project name
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+    -v, --verbose
+
+OPTIONS:
+        --branch &lt;branch&gt;
+        --git &lt;git&gt;
+    -n, --name &lt;name&gt;
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="../atcoder-env/installing-rustc-dep-option-generator.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../installation/rls.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="../atcoder-env/compiling-and-running-using-rustc.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../participate/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -176,13 +202,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="../atcoder-env/installing-rustc-dep-option-generator.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="../installation/rls.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="../atcoder-env/compiling-and-running-using-rustc.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="../participate/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

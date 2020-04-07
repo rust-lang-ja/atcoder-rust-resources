@@ -1,0 +1,272 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>プログラムのテスト - AtCoderコンテストにRustで参加するためのガイドブック</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li><a href="../../introduction.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li><a href="../../environment.html"><strong aria-hidden="true">2.</strong> AtCoderの環境について</a></li><li><a href="../../installation/index.html"><strong aria-hidden="true">3.</strong> 開発環境の準備 (TODO)</a></li><li><ol class="section"><li><a href="../../installation/toolchain.html"><strong aria-hidden="true">3.1.</strong> Rustツールチェインのインストール (TODO)</a></li><li><a href="../../installation/editor.html"><strong aria-hidden="true">3.2.</strong> ソースコードエディタの準備 (TODO)</a></li><li><a href="../../installation/rls.html"><strong aria-hidden="true">3.3.</strong> Rust Language Server のインストール</a></li><li><a href="../../installation/cargo-generate.html"><strong aria-hidden="true">3.4.</strong> cargo-generateのインストール</a></li></ol></li><li><a href="../../participate/index.html"><strong aria-hidden="true">4.</strong> コンテストの参加方法 (TODO)</a></li><li><ol class="section"><li><a href="../../participate/before-contest/index.html"><strong aria-hidden="true">4.1.</strong> コンテスト直前の事前準備</a></li><li><ol class="section"><li><a href="../../participate/before-contest/generate-project.html"><strong aria-hidden="true">4.1.1.</strong> Cargoパッケージの作成 (TODO)</a></li><li><a href="../../participate/before-contest/choose-crates.html"><strong aria-hidden="true">4.1.2.</strong> 利用するクレートの選択とコンパイル (TODO)</a></li><li><a href="../../participate/before-contest/copy-project.html"><strong aria-hidden="true">4.1.3.</strong> プロジェクトのコピー (TODO)</a></li></ol></li><li><a href="../../participate/during-contest/index.html"><strong aria-hidden="true">4.2.</strong> コンテスト開始後の流れ</a></li><li><ol class="section"><li><a href="../../participate/during-contest/write-tests.html"><strong aria-hidden="true">4.2.1.</strong> テストケースの作成</a></li><li><a href="../../participate/during-contest/write-program.html"><strong aria-hidden="true">4.2.2.</strong> プログラムの作成 (TODO)</a></li><li><a href="../../participate/during-contest/test.html" class="active"><strong aria-hidden="true">4.2.3.</strong> プログラムのテスト</a></li><li><a href="../../participate/during-contest/submit.html"><strong aria-hidden="true">4.2.4.</strong> プログラムの提出 (TODO)</a></li></ol></li></ol></li><li><a href="../../tips.html"><strong aria-hidden="true">5.</strong> Tips（小技集） (TODO)</a></li><li><ol class="section"><li><a href="../../use-crates.html"><strong aria-hidden="true">5.1.</strong> クレートの使用例</a></li></ol></li><li><a href="../../atcoder-env/index.html"><strong aria-hidden="true">6.</strong> AtCoder運営者向けの情報</a></li><li><ol class="section"><li><a href="../../atcoder-env/supported-environment.html"><strong aria-hidden="true">6.1.</strong> 本章で想定している環境</a></li><li><a href="../../atcoder-env/installation.html"><strong aria-hidden="true">6.2.</strong> インストール</a></li><li><ol class="section"><li><a href="../../atcoder-env/installing-rust-toolchain.html"><strong aria-hidden="true">6.2.1.</strong> Rustツールチェインのインストール</a></li><li><a href="../../atcoder-env/installing-rust-crates.html"><strong aria-hidden="true">6.2.2.</strong> クレートのコンパイルとインストール</a></li><li><a href="../../atcoder-env/installing-rustc-dep-option-generator.html"><strong aria-hidden="true">6.2.3.</strong> （オプション）クレート検索パス生成ツールのインストール</a></li></ol></li><li><a href="../../atcoder-env/compiling-and-running-program.html"><strong aria-hidden="true">6.3.</strong> コンパイルコマンドと実行コマンド</a></li><li><ol class="section"><li><a href="../../atcoder-env/compiling-and-running-using-rustc.html"><strong aria-hidden="true">6.3.1.</strong> rustcを利用する</a></li><li><a href="../../atcoder-env/compiling-and-running-using-cargo.html"><strong aria-hidden="true">6.3.2.</strong> cargoを利用する</a></li></ol></li></ol></li><li><a href="../../contributors.html"><strong aria-hidden="true">7.</strong> コントリビュータ (TODO)</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">AtCoderコンテストにRustで参加するためのガイドブック</h1>
+
+                        <div class="right-buttons">
+                            <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <!-- -*- coding:utf-8-unix -*- -->
+<h1><a class="header" href="#プログラムのテスト" id="プログラムのテスト">プログラムのテスト</a></h1>
+<p>一通り書き終わったと思ったら、提出前にまずは一度サンプルケースで答えが合うかどうかを確認してみましょう。コマンド プロンプトまたは端末を開いてプロジェクトフォルダに移動して、次のようなコマンドを実行します。</p>
+<pre><code class="language-console">$ cargo test
+   Compiling abc000 v0.1.0 (C:\Users\dicen\workspace\daily\2020\0406\abc000)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.52s
+     Running target\debug\deps\main-1ecbd097f851d76e.exe
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target\debug\deps\sample_inputs-05a0de7d755e5cc1.exe
+
+running 3 tests
+No
+test sample3 ... ok
+Yes
+test sample1 ... ok
+No
+test sample2 ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>すると、このようにテスト結果が表示されます。このように最後に <code>test result: ok.</code> となっていれば、すべてのテストに成功しているということになります。一方で、もし成功しないテストがあれば、次のようになります。</p>
+<pre><code class="language-console">$ cargo test
+   Compiling abc000 v0.1.0 (C:\Users\dicen\workspace\daily\2020\0406\abc000)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.68s
+     Running target\debug\deps\main-1ecbd097f851d76e.exe
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+     Running target\debug\deps\sample_inputs-05a0de7d755e5cc1.exe
+
+running 3 tests
+No
+test sample2 ... ok
+Yes
+No
+test sample1 ... FAILED
+test sample3 ... ok
+
+failures:
+
+---- sample1 stdout ----
+thread 'sample1' panicked at 'assertion failed: `(left == right)`
+  left: `&quot;Yes\n&quot;`,
+ right: `&quot;No\n&quot;`', tests\sample_inputs.rs:16:5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+
+
+failures:
+    sample1
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+
+error: test failed, to rerun pass '--test sample_inputs'
+</code></pre>
+<p>最後の <code>test result: FAILED.</code> により失敗したことが示されています。その横には成功と失敗の個数が示されています。そして上には失敗したときのコマンドの出力も示されています。 <code>assertion failed</code> 以降から、 <code>No</code> と出力すべきところを <code>Yes</code> と出力してしまったことがわかります。</p>
+<blockquote>
+<p>Note: メッセージに示される <code>left:</code> と <code>right:</code> はマクロ <code>assert_eq!(left, right);</code> に渡される引数の左右です。用意したテストコードでは実際の出力を左、期待される出力を右として <code>assert_eq!(output.stdout_str(), &quot;No\n&quot;);</code> としていたことから、本来は <code>No</code> と出力すべきところを <code>Yes</code> と表示した、ということがわかります。</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../participate/during-contest/write-program.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../participate/during-contest/submit.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="../../participate/during-contest/write-program.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="../../participate/during-contest/submit.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
