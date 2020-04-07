@@ -33,7 +33,7 @@ Done! New project created /path/to/project/abc000
 
 まずは空のプロジェクトを作成します。
 
-```
+```console
 $ cargo init abc000
      Created binary (application) package
 ```
