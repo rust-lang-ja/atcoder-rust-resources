@@ -1,26 +1,40 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>はじめに - AtCoderコンテストにRustで参加するためのガイドブック</title>
         
+        
+
+
+        <!-- Custom HTML head -->
+        
+
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -32,11 +46,11 @@
 
         
     </head>
-    <body class="light">
+    <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -60,8 +74,11 @@
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            document.body.className = theme;
-            document.querySelector('html').className = theme + ' js';
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
@@ -78,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li><a href="introduction.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li><a href="environment.html"><strong aria-hidden="true">2.</strong> AtCoderの環境について</a></li><li><a href="installation/index.html"><strong aria-hidden="true">3.</strong> 開発環境の準備 (TODO)</a></li><li><ol class="section"><li><a href="installation/toolchain.html"><strong aria-hidden="true">3.1.</strong> Rustツールチェインのインストール (TODO)</a></li><li><a href="installation/editor.html"><strong aria-hidden="true">3.2.</strong> ソースコードエディタの準備 (TODO)</a></li><li><a href="installation/rls.html"><strong aria-hidden="true">3.3.</strong> Rust Language Server のインストール</a></li><li><a href="installation/cargo-generate.html"><strong aria-hidden="true">3.4.</strong> cargo-generateのインストール</a></li></ol></li><li><a href="participate/index.html"><strong aria-hidden="true">4.</strong> コンテストの参加方法 (TODO)</a></li><li><ol class="section"><li><a href="participate/before-contest/index.html"><strong aria-hidden="true">4.1.</strong> コンテスト直前の事前準備</a></li><li><ol class="section"><li><a href="participate/before-contest/generate-project.html"><strong aria-hidden="true">4.1.1.</strong> Cargoパッケージの作成 (TODO)</a></li><li><a href="participate/before-contest/choose-crates.html"><strong aria-hidden="true">4.1.2.</strong> 利用するクレートの選択とコンパイル (TODO)</a></li><li><a href="participate/before-contest/copy-project.html"><strong aria-hidden="true">4.1.3.</strong> プロジェクトのコピー (TODO)</a></li></ol></li><li><a href="participate/during-contest/index.html"><strong aria-hidden="true">4.2.</strong> コンテスト開始後の流れ</a></li><li><ol class="section"><li><a href="participate/during-contest/write-tests.html"><strong aria-hidden="true">4.2.1.</strong> テストケースの作成</a></li><li><a href="participate/during-contest/write-program.html"><strong aria-hidden="true">4.2.2.</strong> プログラムの作成 (TODO)</a></li><li><a href="participate/during-contest/test.html"><strong aria-hidden="true">4.2.3.</strong> プログラムのテスト</a></li><li><a href="participate/during-contest/submit.html"><strong aria-hidden="true">4.2.4.</strong> プログラムの提出 (TODO)</a></li></ol></li></ol></li><li><a href="tips.html"><strong aria-hidden="true">5.</strong> Tips（小技集） (TODO)</a></li><li><ol class="section"><li><a href="use-crates.html"><strong aria-hidden="true">5.1.</strong> クレートの使用例</a></li></ol></li><li><a href="atcoder-env/index.html"><strong aria-hidden="true">6.</strong> AtCoder運営者向けの情報</a></li><li><ol class="section"><li><a href="atcoder-env/supported-environment.html"><strong aria-hidden="true">6.1.</strong> 本章で想定している環境</a></li><li><a href="atcoder-env/installation.html"><strong aria-hidden="true">6.2.</strong> インストール</a></li><li><ol class="section"><li><a href="atcoder-env/installing-rust-toolchain.html"><strong aria-hidden="true">6.2.1.</strong> Rustツールチェインのインストール</a></li><li><a href="atcoder-env/installing-rust-crates.html"><strong aria-hidden="true">6.2.2.</strong> クレートのコンパイルとインストール</a></li><li><a href="atcoder-env/installing-rustc-dep-option-generator.html"><strong aria-hidden="true">6.2.3.</strong> （オプション）クレート検索パス生成ツールのインストール</a></li></ol></li><li><a href="atcoder-env/compiling-and-running-program.html"><strong aria-hidden="true">6.3.</strong> コンパイルコマンドと実行コマンド</a></li><li><ol class="section"><li><a href="atcoder-env/compiling-and-running-using-rustc.html"><strong aria-hidden="true">6.3.1.</strong> rustcを利用する</a></li><li><a href="atcoder-env/compiling-and-running-using-cargo.html"><strong aria-hidden="true">6.3.2.</strong> cargoを利用する</a></li></ol></li></ol></li><li><a href="contributors.html"><strong aria-hidden="true">7.</strong> コントリビュータ (TODO)</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="environment.html"><strong aria-hidden="true">2.</strong> AtCoderの環境について</a></li><li class="chapter-item expanded "><a href="installation/index.html"><strong aria-hidden="true">3.</strong> 開発環境の準備 (TODO)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="installation/toolchain.html"><strong aria-hidden="true">3.1.</strong> Rustツールチェインのインストール (TODO)</a></li><li class="chapter-item expanded "><a href="installation/editor.html"><strong aria-hidden="true">3.2.</strong> ソースコードエディタの準備 (TODO)</a></li><li class="chapter-item expanded "><a href="installation/rls.html"><strong aria-hidden="true">3.3.</strong> Rust Language Server のインストール</a></li><li class="chapter-item expanded "><a href="installation/cargo-generate.html"><strong aria-hidden="true">3.4.</strong> cargo-generateのインストール</a></li></ol></li><li class="chapter-item expanded "><a href="participate/index.html"><strong aria-hidden="true">4.</strong> コンテストの参加方法 (TODO)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="participate/before-contest/index.html"><strong aria-hidden="true">4.1.</strong> コンテスト直前の事前準備</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="participate/before-contest/generate-project.html"><strong aria-hidden="true">4.1.1.</strong> Cargoパッケージの作成 (TODO)</a></li><li class="chapter-item expanded "><a href="participate/before-contest/choose-crates.html"><strong aria-hidden="true">4.1.2.</strong> 利用するクレートの選択とコンパイル (TODO)</a></li><li class="chapter-item expanded "><a href="participate/before-contest/copy-project.html"><strong aria-hidden="true">4.1.3.</strong> プロジェクトのコピー (TODO)</a></li></ol></li><li class="chapter-item expanded "><a href="participate/during-contest/index.html"><strong aria-hidden="true">4.2.</strong> コンテスト開始後の流れ</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="participate/during-contest/write-tests.html"><strong aria-hidden="true">4.2.1.</strong> テストケースの作成</a></li><li class="chapter-item expanded "><a href="participate/during-contest/write-program.html"><strong aria-hidden="true">4.2.2.</strong> プログラムの作成 (TODO)</a></li><li class="chapter-item expanded "><a href="participate/during-contest/test.html"><strong aria-hidden="true">4.2.3.</strong> プログラムのテスト</a></li><li class="chapter-item expanded "><a href="participate/during-contest/submit.html"><strong aria-hidden="true">4.2.4.</strong> プログラムの提出 (TODO)</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="tips.html"><strong aria-hidden="true">5.</strong> Tips（小技集） (TODO)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="use-crates.html"><strong aria-hidden="true">5.1.</strong> クレートの使用例</a></li></ol></li><li class="chapter-item expanded "><a href="atcoder-env/index.html"><strong aria-hidden="true">6.</strong> AtCoder運営者向けの情報</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="atcoder-env/supported-environment.html"><strong aria-hidden="true">6.1.</strong> 本章で想定している環境</a></li><li class="chapter-item expanded "><a href="atcoder-env/installation.html"><strong aria-hidden="true">6.2.</strong> インストール</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="atcoder-env/installing-rust-toolchain.html"><strong aria-hidden="true">6.2.1.</strong> Rustツールチェインのインストール</a></li><li class="chapter-item expanded "><a href="atcoder-env/installing-rust-crates.html"><strong aria-hidden="true">6.2.2.</strong> クレートのコンパイルとインストール</a></li><li class="chapter-item expanded "><a href="atcoder-env/installing-rustc-dep-option-generator.html"><strong aria-hidden="true">6.2.3.</strong> （オプション）クレート検索パス生成ツールのインストール</a></li></ol></li><li class="chapter-item expanded "><a href="atcoder-env/compiling-and-running-program.html"><strong aria-hidden="true">6.3.</strong> コンパイルコマンドと実行コマンド</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="atcoder-env/compiling-and-running-using-rustc.html"><strong aria-hidden="true">6.3.1.</strong> rustcを利用する</a></li><li class="chapter-item expanded "><a href="atcoder-env/compiling-and-running-using-cargo.html"><strong aria-hidden="true">6.3.2.</strong> cargoを利用する</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="contributors.html"><strong aria-hidden="true">7.</strong> コントリビュータ (TODO)</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -87,37 +104,38 @@
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">AtCoderコンテストにRustで参加するためのガイドブック</h1>
+                    <h1 class="menu-title">AtCoderコンテストにRustで参加するためのガイドブック</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
                     </div>
                 </div>
 
@@ -213,13 +231,14 @@ for &amp;i in &amp;v {
 }
 </code></pre>
 <p>また、複雑なアルゴリズムにバグはつきものです。例えば、添字計算をしていてちょっとした書き間違いで配列のサイズを超えたところを参照してしまったといったことは度々起こりえます。こういうとき、例えばC/C++では配列外参照をしてしまったプログラムがどのように動作するかの保証がなく、<code>segmentation fault</code>とだけ表示されて異常終了したり、たまたまうまくいってしまったり、手元で正解するケースがサーバーでは誤答となったりし得ます。こういったよく分からない動作が起きてしまうとバグの原因特定が難しくなったり無関係なところを原因と思い込んだりしてしまい、デバッグにかなりの時間を費やしてしまうこともしばしばあります。この配列外参照の例ではRustは必ずエラーを起こしますし、どこで起こしたかも表示してくれます。それが自分のコードでない場合でも (<code>-g</code>オプション付きでビルドされたかCargoでデバッグビルドされたバイナリであれば) バックトレースを表示させることで呼出元となる自分のコードを特定できます。</p>
-<pre><pre class="playpen"><code class="language-rust should_panic">
-# #![allow(unused_variables)]
-#fn main() {
-let x = vec![1, 2, 3];
+<pre><pre class="playground"><code class="language-rust should_panic">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = vec![1, 2, 3];
 let y = 3;
 let _z = x[y]; // 配列外参照!
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <pre><code class="language-text">thread 'main' panicked at 'index out of bounds: the len is 3 but the index is 3', ...
 stack backtrace:
   (...中略...)
@@ -311,17 +330,18 @@ fn main() {
 <li>
 <p><a href="https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html">代数的データ構造</a></p>
 <p>Rustの列挙型 (<code>enum</code>)は各バリアントに値を持てます。いわゆる直和型や代数的データ型と呼ばれるものです。タグ付き共用体 (tagged union) と呼ばれることもあります。例えば一方向連結リストの構造は次のように表せます。</p>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-enum List&lt;T&gt; {
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum List&lt;T&gt; {
     /// 先頭要素とそれ以降の要素によるリストを持つ。
     Cons(T, Box&lt;List&lt;T&gt;&gt;),
 
     /// リストが空であることを示す。
     Nil,
 }
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 </li>
 <li>
 <p><a href="https://doc.rust-lang.org/book/ch10-02-traits.html">トレイト</a></p>
@@ -365,10 +385,10 @@ enum List&lt;T&gt; {
 <p><a href="https://doc.rust-lang.org/book/ch03-01-variables-and-mutability.html#shadowing">シャドーイング (の推奨)</a></p>
 <p>一般的にシャドーイングはすべきでないとされる傾向がありますが、Rustではむしろシャドーイングが推奨されています。
 これにより、たとえば処理の途中で一度変数に格納するときにもわざわざprefixやsuffixが付いた別の変数を宣言しなくて良くなりますし、あるいは再束縛することで不要になった<code>mut</code>を消すこともできます。</p>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-// この配列を数値にしてかつソートしたい
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// この配列を数値にしてかつソートしたい
 let list = vec![&quot;2&quot;, &quot;4&quot;, &quot;1&quot;, &quot;5&quot;, &quot;3&quot;];
 let list = list.into_iter().map(|x| x.parse().unwrap());
 // ソートしたいので mut とする
@@ -377,7 +397,8 @@ list.sort();
 let list = list; // ソートしたので mut は不要、消す
 // list.push(4); // =&gt; 既に mut ではないので変更できない
 assert_eq!(list, [1, 2, 3, 4, 5]);
-#}</code></pre></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <p>一般にシャドーイングするべきではないとされる理由は様々にありますが、一番はやはり混同しやすくなるからと考えられます。その点Rustは強い静的型付け言語ですので、仮に混同したとしてもどこかのタイミングで型エラーになるという期待ができます。</p>
 <p>また、変数の個数を抑止するという効果もあります。block expression等と適宜組み合わせることで変数の数やスコープはさらに小さく保つことができ、多少関数の実装が長くなっても見通しが悪くなりにくいと言えます。競技プログラミングではmain関数が長くなりがちなので一層嬉しいのではないでしょうか。</p>
 </li>
@@ -400,7 +421,7 @@ assert_eq!(list, [1, 2, 3, 4, 5]);
 <li>後日提出したプログラムを見直したり保守することは通常ない (ライブラリを除く)</li>
 </ul>
 <p>したがって、Rustの様々な設計は、必要以上に煩雑に感じることがあります。例えば、Rustでの競技プログラミングを始めようとした方で、標準入力をとるのがとても面倒で挫折し (かけ) た、という方も度々見かけます。例えば、空白区切り二つの整数を読み取ってその和を計算するプログラムは、工夫をしなければ次のようになります。</p>
-<pre><pre class="playpen"><code class="language-rust no_run">fn main() {
+<pre><pre class="playground"><code class="language-rust no_run">fn main() {
     let (a, b) = {
         let mut s = String::new();
         std::io::stdin().read_line(&amp;mut s).unwrap();
@@ -455,6 +476,10 @@ assert_eq!(list, [1, 2, 3, 4, 5]);
                         
 
                         
+                            <a rel="next" href="environment.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -465,12 +490,24 @@ assert_eq!(list, [1, 2, 3, 4, 5]);
                 
 
                 
+                    <a rel="next" href="environment.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
             </nav>
 
         </div>
 
         
 
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
         
 
         
